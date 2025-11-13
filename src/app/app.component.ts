@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Auth, signOut } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 interface Elemento {
   icono: string;
@@ -12,45 +14,44 @@ interface Elemento {
   styleUrls: ['app.component.scss'],
   standalone: false,
 })
-
-
 export class AppComponent {
 
   elementos: Elemento[] = [
-
     {
-      //Primer elemento de la lista
-      icono: 'Home',
+      icono: 'home-outline',
       nombre: 'Inicio',
       ruta: '/principal'
     },
-    { //Primer elemento de la lista
+    {
       icono: 'newspaper-outline',
-      nombre: 'Novedades ',
+      nombre: 'Novedades',
       ruta: '/social'
     },
-    { //Primer elemento de la lista
+    {
       icono: 'information-circle-outline',
       nombre: 'Información',
       ruta: '/extras'
     },
     {
-      //Primer elemento de la lista
       icono: 'game-controller-outline',
       nombre: 'Jugar',
       ruta: '/juego'
     },
     {
-      //Primer elemento de la lista
       icono: 'chatbubbles-outline',
       nombre: 'Comunidad',
       ruta: '/comunidad'
     },
-
-
-
   ];
 
-  constructor() { }
+  constructor(private auth: Auth, private router: Router) {}
 
+  async logout() {
+    try {
+      await signOut(this.auth);
+      this.router.navigate(['/login']); // Redirige a la pantalla de login
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  }
 }

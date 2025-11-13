@@ -1,25 +1,57 @@
 <ion-app>
-
-  <ion-menu side="start" menuId="first" contentId="main" style="--background: #1b100e;">
+  <ion-menu
+    side="start"
+    menuId="first"
+    contentId="main"
+    style="--background: #1b100e"
+  >
     <ion-header>
-      <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d;">
-        <ion-title style="color: #ffcc5c; font-family: 'Press Start 2P', monospace; font-size: 0.9rem; text-shadow: 1px 1px 0 #4a260c;">
+      <ion-toolbar
+        style="--background: #1b100e; border-bottom: 2px solid #7b3b1d"
+      >
+        <ion-title
+          style="
+            color: #ffcc5c;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 0 #4a260c;
+          "
+        >
           MENÚ FACE-BOMB
         </ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content style="--background: #241a17; font-family: 'Press Start 2P', monospace;">
+    <ion-content
+      style="--background: #241a17; font-family: 'Press Start 2P', monospace"
+    >
       <!-- Efecto CRT en el menú -->
-      <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: repeating-linear-gradient(0deg,rgba(0,0,0,0.1) 0px,rgba(0,0,0,0.1) 1px,transparent 2px); z-index: 9999; opacity: 0.1;"></div>
-      
-      <ion-list style="background: transparent; padding: 1rem 0;">
+      <div
+        style="
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.1) 0px,
+            rgba(0, 0, 0, 0.1) 1px,
+            transparent 2px
+          );
+          z-index: 9999;
+          opacity: 0.1;
+        "
+      ></div>
+
+      <ion-list style="background: transparent; padding: 1rem 0">
         <!--Recorremos la lista de elementos, para cada uno se crea un item que
         mostrará el icono y el nombre. Al dar clic se envia al módulo seleccionado.
         Detail sirve para hacer visible la flecha al final del item-->
-        <ion-item 
+        <ion-item
           *ngFor="let item of elementos"
-          [routerLink]="item.ruta" 
+          [routerLink]="item.ruta"
           detail
           style="
             --background: #261912;
@@ -34,31 +66,81 @@
             font-size: 0.6rem;
             min-height: 60px;
           "
-          class="menu-item">
-          <ion-icon 
-            name="{{item.icono}}" 
-            slot="start" 
-            style="color: #ffb000; font-size: 1.2rem; margin-right: 1rem; filter: drop-shadow(1px 1px 0 #4a260c);">
+          class="menu-item"
+        >
+          <ion-icon
+            name="{{ item.icono }}"
+            slot="start"
+            style="
+              color: #ffb000;
+              font-size: 1.2rem;
+              margin-right: 1rem;
+              filter: drop-shadow(1px 1px 0 #4a260c);
+            "
+          >
           </ion-icon>
-          <ion-label style="color: #ffcc5c; text-shadow: 1px 1px 0 #4a260c;">
-            {{item.nombre}}
+          <ion-label style="color: #ffcc5c; text-shadow: 1px 1px 0 #4a260c">
+            {{ item.nombre }}
           </ion-label>
-          
+
           <!-- Flecha personalizada -->
-          <ion-icon 
-            name="chevron-forward" 
-            slot="end" 
-            style="color: #ffb000; font-size: 0.8rem;">
+          <ion-icon
+            name="chevron-forward"
+            slot="end"
+            style="color: #ffb000; font-size: 0.8rem"
+          >
           </ion-icon>
         </ion-item>
       </ion-list>
+      <div style="padding: 1rem; text-align: center">
+        <ion-button
+          expand="block"
+          fill="solid"
+          color="warning"
+          (click)="logout()"
+          class="btn-jugar"
+          style="
+            --background: linear-gradient(135deg, #ffb000 0%, #ff3000 100%);
+            color: #2b1007;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(255, 176, 0, 0.4);
+            transition: all 0.3s ease-in-out;
+          "
+        >
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          CERRAR SESIÓN
+        </ion-button>
+      </div>
 
       <!-- Footer del menú -->
-      <div style="padding: 1rem; text-align: center; border-top: 2px solid #7b3b1d; margin-top: 2rem;">
-        <p style="color: #f0d1a6; font-size: 0.5rem; margin: 0; text-shadow: 1px 1px 0 #3a1b08;">
+      <div
+        style="
+          padding: 1rem;
+          text-align: center;
+          border-top: 2px solid #7b3b1d;
+          margin-top: 2rem;
+        "
+      >
+        <p
+          style="
+            color: #f0d1a6;
+            font-size: 0.5rem;
+            margin: 0;
+            text-shadow: 1px 1px 0 #3a1b08;
+          "
+        >
           FACE-BOMB © 2024
         </p>
-        <p style="color: #ffb000; font-size: 0.4rem; margin: 0.5rem 0 0 0; text-shadow: 1px 1px 0 #4a260c;">
+        <p
+          style="
+            color: #ffb000;
+            font-size: 0.4rem;
+            margin: 0.5rem 0 0 0;
+            text-shadow: 1px 1px 0 #4a260c;
+          "
+        >
           UNA AVENTURA DE DULCES Y CAOS
         </p>
       </div>

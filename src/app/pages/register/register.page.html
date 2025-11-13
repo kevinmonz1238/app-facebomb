@@ -1,0 +1,29 @@
+<ion-content class="fondo">
+  <div class="overlay"></div>
+
+  <div class="contenedor">
+    <h1 class="titulo">CREAR CUENTA</h1>
+
+    <ion-item class="input-retro">
+      <ion-icon name="person-add-outline" slot="start"></ion-icon>
+      <ion-input placeholder="Nombre de usuario" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item class="input-retro">
+      <ion-icon name="mail-outline" slot="start"></ion-icon>
+      <ion-input placeholder="Correo electrónico" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item class="input-retro">
+      <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+      <ion-input placeholder="Contraseña" type="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" class="btn-jugar">REGISTRAR</ion-button>
+
+    <p class="texto-registro">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login" class="link">Inicia sesión</a>
+    </p>
+  </div>
+</ion-content>

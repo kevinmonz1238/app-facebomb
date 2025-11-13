@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.fondo {
+  --background: radial-gradient(circle at center, #1b100e 0%, #0a0504 100%);
+  position: relative;
+  font-family: 'Press Start 2P', monospace;
+  overflow: hidden;
+}
+
+/* Efecto CRT */
+.overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 2px);
+  z-index: 1;
+}
+
+.contenedor {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.titulo {
+  color: #ffcc5c;
+  text-shadow: 2px 2px 0 #4a260c, 0 0 10px #ffb000;
+  margin-bottom: 2.5rem;
+  font-size: 1rem;
+}
+
+/* Inputs retro */
+.input-retro {
+  --background: #261912;
+  --color: #ffcc5c;
+  border: 2px solid #8c4520;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.6rem;
+  text-shadow: 1px 1px 0 #3a1b08;
+  box-shadow: 0 0 10px rgba(255, 176, 0, 0.2);
+}
+
+ion-icon {
+  color: #ffb000;
+}
+
+/* Botón animado */
+.btn-jugar {
+  transition: all 0.3s ease-in-out !important;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Press Start 2P', monospace;
+  --background: linear-gradient(135deg, #ffc400 0%, #ff3000 100%) !important;
+  color: #2b1007;
+  font-size: 0.7rem;
+  margin-top: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(255, 176, 0, 0.4);
+  animation: pulse-glow 2s infinite;
+}
+
+.btn-jugar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-jugar:hover::before {
+  left: 100%;
+}
+
+.btn-jugar:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(255, 176, 0, 0.6) !important;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 6px 20px rgba(255,176,0,0.4); }
+  50% { box-shadow: 0 6px 30px rgba(255,176,0,0.7); }
+  100% { box-shadow: 0 6px 20px rgba(255,176,0,0.4); }
+}
+
+/* Texto de registro/login */
+.texto-registro {
+  color: #f5dba1;
+  font-size: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.link {
+  color: #ffb000;
+  text-shadow: 1px 1px 0 #4a260c;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #ffc400;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  .titulo { font-size: 0.8rem; }
+  .btn-jugar { font-size: 0.6rem; }
+}

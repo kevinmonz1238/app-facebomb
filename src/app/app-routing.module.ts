@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { PrincipalPageModule } from './pages/principal/principal.module';
+import { AuthGuard } from './guards/auth-guard';
 
 // Definición de las rutas principales de la aplicación
 const routes: Routes = [
@@ -40,9 +41,19 @@ const routes: Routes = [
     path: 'juego',
     loadChildren: () => import('./pages/juego/juego.module')
       .then(m => m.JuegoPageModule)
-  },  {
+  },
+  {
     path: 'comunidad',
-    loadChildren: () => import('./pages/comunidad/comunidad.module').then( m => m.ComunidadPageModule)
+    loadChildren: () => import('./pages/comunidad/comunidad.module').then( m => m.ComunidadPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
 
 ];
