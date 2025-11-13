@@ -1,31 +1,45 @@
+<!-- Encabezado principal de la página -->
 <ion-header [translucent]="true">
+  <!-- Barra superior con fondo oscuro y borde inferior -->
   <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d;">
+    
+    <!-- Botón de menú lateral (hamburguesa) -->
     <ion-buttons slot="start">
       <ion-menu-button menu="first" style="color: #ffcc5c;"></ion-menu-button>
     </ion-buttons>
+
+    <!-- Título centrado del encabezado -->
     <ion-title style="color: #ffcc5c; font-family: 'Press Start 2P', monospace; font-size: 0.9rem; text-shadow: 1px 1px 0 #4a260c;">
       COMUNIDAD
     </ion-title>
+
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal de la página -->
 <ion-content [fullscreen]="true" class="ion-padding fondo-comunidad">
 
+  <!-- Contenedor general de la sección de comunidad -->
   <div class="contenedor-comunidad">
+    <!-- Título o encabezado de la sección -->
     <h1 class="titulo-seccion">💬 Comparte tus ideas con la comunidad</h1>
 
-    <!-- Lista de comentarios -->
+    <!-- Lista de comentarios existentes -->
     <ion-list class="lista-comentarios">
+      <!-- Recorre cada comentario recibido (de tipo observable con async) -->
       <ion-item *ngFor="let comentario of comentarios | async" class="comentario-item">
         <ion-label>
+          <!-- Texto del comentario -->
           <p class="texto-comentario">{{ comentario.texto }}</p>
+          <!-- Fecha formateada del comentario -->
           <small class="fecha">{{ comentario.fecha?.toDate() | date:'short' }}</small>
         </ion-label>
       </ion-item>
     </ion-list>
 
-    <!-- Input para agregar nuevo comentario -->
+    <!-- Formulario para agregar un nuevo comentario -->
     <div class="formulario-comentario">
+      <!-- Campo de texto con enlace bidireccional a la variable 'nuevoComentario' -->
       <ion-input
         placeholder="Escribe tu comentario..."
         [(ngModel)]="nuevoComentario"
@@ -33,6 +47,7 @@
         class="input-comentario"
       ></ion-input>
 
+      <!-- Botón que ejecuta la función agregarComentario() al hacer clic -->
       <ion-button expand="block" (click)="agregarComentario()" class="btn-jugar">
         Enviar Comentario
       </ion-button>
@@ -40,4 +55,3 @@
   </div>
 
 </ion-content>
-

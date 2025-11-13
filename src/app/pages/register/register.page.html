@@ -1,28 +1,45 @@
+<!-- Contenedor principal del contenido de la página -->
 <ion-content class="fondo">
+  
+  <!-- Capa semitransparente para efecto visual -->
   <div class="overlay"></div>
 
+  <!-- Contenedor principal del formulario de registro -->
   <div class="contenedor">
+    <!-- Título principal -->
     <h1 class="titulo">CREAR CUENTA</h1>
 
+    <!-- Campo para el nombre de usuario -->
     <ion-item class="input-retro">
+      <!-- Icono decorativo al inicio del input -->
       <ion-icon name="person-add-outline" slot="start"></ion-icon>
+      <!-- Input para escribir el nombre de usuario -->
       <ion-input placeholder="Nombre de usuario" type="text"></ion-input>
     </ion-item>
 
+    <!-- Campo para el correo electrónico -->
     <ion-item class="input-retro">
+      <!-- Icono de correo -->
       <ion-icon name="mail-outline" slot="start"></ion-icon>
+      <!-- Input de tipo email -->
       <ion-input placeholder="Correo electrónico" type="email"></ion-input>
     </ion-item>
 
+    <!-- Campo para la contraseña -->
     <ion-item class="input-retro">
+      <!-- Icono de candado -->
       <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+      <!-- Input de tipo contraseña -->
       <ion-input placeholder="Contraseña" type="password"></ion-input>
     </ion-item>
 
+    <!-- Botón principal para registrar al usuario -->
     <ion-button expand="block" class="btn-jugar">REGISTRAR</ion-button>
 
+    <!-- Texto inferior con enlace a la página de inicio de sesión -->
     <p class="texto-registro">
       ¿Ya tienes cuenta?
+      <!-- Enlace que redirige al login usando routerLink -->
       <a routerLink="/login" class="link">Inicia sesión</a>
     </p>
   </div>
