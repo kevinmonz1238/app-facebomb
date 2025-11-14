@@ -17,7 +17,7 @@ export class LoginPage {
   async onLogin() {
     try {
       await this.authService.login(this.email, this.password);
-      this.router.navigate(['/principal']); // redirige a tu pantalla principal
+      this.router.navigate(['/principal']);
     } catch (err) {
       console.error(err);
       alert('Credenciales inválidas');

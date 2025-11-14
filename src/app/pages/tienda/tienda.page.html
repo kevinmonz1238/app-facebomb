@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d;">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="first" style="color: #ffcc5c;"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="color: #ffcc5c; font-family: 'Press Start 2P', monospace; font-size: 0.9rem; text-shadow: 1px 1px 0 #4a260c;">
+      TIENDA
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <h1 class="titulo">TIENDA</h1>
+
+    <ion-card *ngFor="let p of productos" class="producto-card">
+      <img [src]="p.imagen" />
+
+      <ion-card-header>
+        <ion-card-title>{{ p.nombre }}</ion-card-title>
+        <ion-card-subtitle>{{ p.precio }} monedas</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>{{ p.descripcion }}</p>
+
+        <ion-button expand="block" class="btn-jugar" (click)="agregar(p.id)">
+          Agregar al carrito
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

@@ -1,0 +1,61 @@
+ion-content {
+  --background: #1b100e;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.container {
+  padding: 1.5rem;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #ffcc5c;
+  text-shadow: 2px 2px #4a260c;
+  margin-bottom: 1.5rem;
+}
+
+ion-item {
+  --background: #241a17;
+  border: 2px solid #8c4520;
+  border-radius: 10px;
+  margin: 0.7rem 0;
+  padding: 0.5rem;
+  box-shadow: 0 6px 20px rgba(255, 176, 0, 0.4);
+  transition: 0.2s;
+}
+
+ion-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 176, 0, 0.7);
+}
+
+ion-button {
+  --background: #ffb000;
+  --color: #2b1007;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.5rem;
+}
+
+ion-button:hover {
+  filter: brightness(1.2);
+  transform: scale(1.1);
+}
+
+.total {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #ffcc5c;
+  text-shadow: 2px 2px #4a260c;
+}
+
+/* Botón de comprar */
+.btn-jugar {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  --background: linear-gradient(135deg, #ffc400, #ff3000);
+  box-shadow: 0 6px 20px rgba(255, 176, 0, 0.4);
+  animation: pulse-glow 2s infinite;
+}

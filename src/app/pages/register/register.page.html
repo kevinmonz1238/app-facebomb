@@ -1,25 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d;">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="first" style="color: #ffcc5c;"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="color: #ffcc5c; font-family: 'Press Start 2P', monospace; font-size: 0.9rem; text-shadow: 1px 1px 0 #4a260c;">
+        REGISTRO
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="fondo">
-  <div class="overlay"></div>
 
   <div class="contenedor">
     <h1 class="titulo">CREAR CUENTA</h1>
 
     <ion-item class="input-retro">
-      <ion-icon name="person-add-outline" slot="start"></ion-icon>
-      <ion-input placeholder="Nombre de usuario" type="text"></ion-input>
-    </ion-item>
-
-    <ion-item class="input-retro">
       <ion-icon name="mail-outline" slot="start"></ion-icon>
-      <ion-input placeholder="Correo electrónico" type="email"></ion-input>
+      <ion-input
+        placeholder="Correo electrónico"
+        type="email"
+        [(ngModel)]="email">
+      </ion-input>
     </ion-item>
 
     <ion-item class="input-retro">
       <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-      <ion-input placeholder="Contraseña" type="password"></ion-input>
+      <ion-input
+        placeholder="Contraseña"
+        type="password"
+        [(ngModel)]="password">
+      </ion-input>
     </ion-item>
 
-    <ion-button expand="block" class="btn-jugar">REGISTRAR</ion-button>
+    <ion-button expand="block" class="btn-jugar" (click)="onRegister()">
+      REGISTRAR
+    </ion-button>
 
     <p class="texto-registro">
       ¿Ya tienes cuenta?

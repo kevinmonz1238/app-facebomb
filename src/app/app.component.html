@@ -17,7 +17,7 @@
             text-shadow: 1px 1px 0 #4a260c;
           "
         >
-          MENÚ FACE-BOMB
+          MENU
         </ion-title>
       </ion-toolbar>
     </ion-header>
@@ -92,27 +92,18 @@
           </ion-icon>
         </ion-item>
       </ion-list>
-      <div style="padding: 1rem; text-align: center">
-        <ion-button
-          expand="block"
-          fill="solid"
-          color="warning"
-          (click)="logout()"
-          class="btn-jugar"
-          style="
-            --background: linear-gradient(135deg, #ffb000 0%, #ff3000 100%);
-            color: #2b1007;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 0.6rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(255, 176, 0, 0.4);
-            transition: all 0.3s ease-in-out;
-          "
-        >
-          <ion-icon name="log-out-outline" slot="start"></ion-icon>
-          CERRAR SESIÓN
-        </ion-button>
-      </div>
+    <div style="padding: 1rem; text-align: center" *ngIf="loggedIn">
+  <ion-button
+    expand="block"
+    fill="solid"
+    color="warning"
+    (click)="logout()"
+    class="btn-jugar"
+  >
+    <ion-icon name="log-out-outline" slot="start"></ion-icon>
+    CERRAR SESION
+  </ion-button>
+</div>
 
       <!-- Footer del menú -->
       <div
