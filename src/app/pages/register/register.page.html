@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <ion-header [translucent]="true">
   <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d;">
     <ion-buttons slot="start">
@@ -10,50 +9,35 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- Contenido principal -->
 <ion-content class="fondo">
-=======
-<!-- Contenedor principal del contenido de la página -->
-<ion-content class="fondo">
-  
-  <!-- Capa semitransparente para efecto visual -->
+
+  <!-- Capa semitransparente / efecto visual -->
   <div class="overlay"></div>
->>>>>>> 4e95db5fe3e26f574af34843a06a89f1a6644823
 
   <!-- Contenedor principal del formulario de registro -->
   <div class="contenedor">
-    <!-- Título principal -->
+
     <h1 class="titulo">CREAR CUENTA</h1>
 
-    <!-- Campo para el nombre de usuario -->
+    <!-- Nombre de usuario -->
     <ion-item class="input-retro">
-<<<<<<< HEAD
+      <ion-icon name="person-add-outline" slot="start"></ion-icon>
+    </ion-item>
+
+    <!-- Correo -->
+    <ion-item class="input-retro">
       <ion-icon name="mail-outline" slot="start"></ion-icon>
       <ion-input
         placeholder="Correo electrónico"
         type="email"
         [(ngModel)]="email">
       </ion-input>
-=======
-      <!-- Icono decorativo al inicio del input -->
-      <ion-icon name="person-add-outline" slot="start"></ion-icon>
-      <!-- Input para escribir el nombre de usuario -->
-      <ion-input placeholder="Nombre de usuario" type="text"></ion-input>
     </ion-item>
 
-    <!-- Campo para el correo electrónico -->
+    <!-- Contraseña -->
     <ion-item class="input-retro">
-      <!-- Icono de correo -->
-      <ion-icon name="mail-outline" slot="start"></ion-icon>
-      <!-- Input de tipo email -->
-      <ion-input placeholder="Correo electrónico" type="email"></ion-input>
->>>>>>> 4e95db5fe3e26f574af34843a06a89f1a6644823
-    </ion-item>
-
-    <!-- Campo para la contraseña -->
-    <ion-item class="input-retro">
-      <!-- Icono de candado -->
       <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-<<<<<<< HEAD
       <ion-input
         placeholder="Contraseña"
         type="password"
@@ -61,23 +45,16 @@
       </ion-input>
     </ion-item>
 
+    <!-- Botón registrar -->
     <ion-button expand="block" class="btn-jugar" (click)="onRegister()">
       REGISTRAR
     </ion-button>
-=======
-      <!-- Input de tipo contraseña -->
-      <ion-input placeholder="Contraseña" type="password"></ion-input>
-    </ion-item>
 
-    <!-- Botón principal para registrar al usuario -->
-    <ion-button expand="block" class="btn-jugar">REGISTRAR</ion-button>
->>>>>>> 4e95db5fe3e26f574af34843a06a89f1a6644823
-
-    <!-- Texto inferior con enlace a la página de inicio de sesión -->
+    <!-- Enlace al login -->
     <p class="texto-registro">
       ¿Ya tienes cuenta?
-      <!-- Enlace que redirige al login usando routerLink -->
       <a routerLink="/login" class="link">Inicia sesión</a>
     </p>
+
   </div>
 </ion-content>
