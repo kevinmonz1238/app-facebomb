@@ -23,4 +23,15 @@ export class LoginPage {
       alert('Credenciales inválidas');
     }
   }
+
+  // NUEVO MÉTODO: Login con Google
+  async onLoginWithGoogle() {
+    try {
+      await this.authService.loginWithGoogle();
+      this.router.navigate(['/principal']);
+    } catch (err) {
+      console.error('Error en login con Google:', err);
+      alert('Error al iniciar sesión con Google');
+    }
+  }
 }

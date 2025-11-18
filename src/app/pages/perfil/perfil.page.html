@@ -13,7 +13,7 @@
         font-size: clamp(0.7rem, 3.5vw, 0.9rem);
         text-shadow: 1px 1px 0 #4a260c;
         text-align: center;
-        padding: 0.5rem;
+        padding: clamp(0.25rem, 1vw, 0.5rem);
       "
     >
       PERFIL
@@ -42,76 +42,335 @@
     "
   ></div>
 
+  <!-- Estado de carga -->
   <div
+    *ngIf="cargando"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 70vh;
+      padding: clamp(1rem, 5vw, 2rem);
+    "
+  >
+    <div style="text-align: center;">
+      <div style="
+        width: clamp(60px, 15vw, 80px);
+        height: clamp(60px, 15vw, 80px);
+        border: 3px solid #ffb000;
+        border-top: 3px solid transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto clamp(1rem, 3vw, 1.5rem);
+      "></div>
+      <p style="
+        color: #ffcc5c;
+        font-family: 'Press Start 2P', monospace;
+        font-size: clamp(0.5rem, 2.5vw, 0.7rem);
+        text-shadow: 1px 1px 0 #4a260c;
+        margin: 0;
+      ">
+        CARGANDO PERFIL...
+      </p>
+    </div>
+  </div>
+
+  <!-- Contenido del perfil -->
+  <div
+    *ngIf="!cargando"
     class="perfil-box"
     style="
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 80vh;
-      padding: clamp(1rem, 5vw, 2rem);
+      min-height: calc(100vh - 140px);
+      padding: clamp(0.5rem, 2vw, 1rem) clamp(0.8rem, 3vw, 1.5rem);
       text-align: center;
     "
   >
-    <img
-      [src]=""
-      class="avatar"
-      style="
-        width: clamp(80px, 25vw, 120px);
-        height: clamp(80px, 25vw, 120px);
-        border-radius: 50%;
-        border: 3px solid #ffb000;
-        background: #261912;
-        margin-bottom: clamp(1rem, 4vw, 1.5rem);
-        object-fit: cover;
-        box-shadow: 0 0 15px rgba(255, 176, 0, 0.3);
-      "
-    />
 
-    <h2
-      style="
+    <!-- Sección Avatar y Información Principal -->
+    <div style="
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: clamp(1rem, 4vw, 2rem);
+    ">
+      <!-- Avatar del usuario -->
+      <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: clamp(1rem, 4vw, 1.5rem);
+      ">
+        <img
+          [src]="getFotoPerfil()"
+          (error)="onErrorImagen($event)"
+          class="avatar"
+          style="
+            width: clamp(90px, 22vw, 140px);
+            height: clamp(90px, 22vw, 140px);
+            border-radius: 50%;
+            border: clamp(2px, 0.5vw, 3px) solid #ffb000;
+            background: #261912;
+            object-fit: cover;
+            box-shadow:
+              0 0 clamp(10px, 2vw, 20px) rgba(255, 176, 0, 0.3),
+              inset 0 0 clamp(10px, 2vw, 20px) rgba(255, 176, 0, 0.1);
+          "
+        />
+      </div>
+
+      <!-- Nombre del usuario -->
+      <h2 style="
         color: #ffcc5c;
         font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.8rem, 4vw, 1.2rem);
+        font-size: clamp(0.7rem, 3.5vw, 1.1rem);
         text-shadow: 2px 2px 0 #4a260c;
-        margin-bottom: clamp(0.5rem, 2vw, 0.8rem);
+        margin: 0 0 clamp(0.5rem, 2vw, 0.8rem) 0;
         line-height: 1.3;
-      "
-    >
-      LOYA
-    </h2>
+        word-break: break-word;
+        padding: 0 clamp(0.5rem, 2vw, 1rem);
+      ">
+        {{ getNombreDisplay() }}
+      </h2>
 
-    <h3
-      style="
+      <!-- Email del usuario -->
+      <div style="
         color: #f0d1a6;
         font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.6rem, 3vw, 0.8rem);
+        font-size: clamp(0.4rem, 2vw, 0.55rem);
         text-shadow: 1px 1px 0 #3a1b08;
-        margin-bottom: clamp(1.5rem, 6vw, 2.5rem);
-        line-height: 1.3;
-      "
-    >
-      💰 100 monedas
-    </h3>
+        margin-bottom: clamp(1rem, 4vw, 1.5rem);
+        line-height: 1.4;
+        background: rgba(59, 30, 18, 0.7);
+        padding: clamp(0.6rem, 2.5vw, 0.9rem);
+        border-radius: clamp(6px, 1.5vw, 8px);
+        border: 1px solid #7b3b1d;
+        word-break: break-all;
+        backdrop-filter: blur(5px);
+      ">
+        📧 {{ getEmail() }}
+      </div>
+    </div>
 
-    <ion-button
-      class="btn-jugar"
-      routerLink="/tienda"
-      style="
-        --background: linear-gradient(90deg, #ffb000 0%, #ff4800 100%);
-        --color: #2b1007;
-        --border-radius: 8px;
-        border: 2px solid #803000;
-        font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.5rem, 2.5vw, 0.7rem);
-        min-height: 50px;
-        width: 100%;
-        max-width: 250px;
-        text-shadow: 1px 1px 0 #ffe3b3;
-      "
-    >
-      Ir a la tienda
-    </ion-button>
+    <!-- Sección Estadísticas y Información -->
+    <div style="
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: clamp(1.5rem, 6vw, 2.5rem);
+    ">
+      <!-- Monedas -->
+      <div style="
+        background: linear-gradient(135deg, rgba(255, 176, 0, 0.15) 0%, rgba(255, 72, 0, 0.1) 100%);
+        border: 2px solid #ffb000;
+        border-radius: clamp(8px, 2vw, 12px);
+        padding: clamp(0.8rem, 3vw, 1.2rem);
+        margin-bottom: clamp(1rem, 4vw, 1.5rem);
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(255, 176, 0, 0.2);
+      ">
+        <div style="
+          color: #ffb000;
+          font-family: 'Press Start 2P', monospace;
+          font-size: clamp(0.6rem, 3vw, 0.8rem);
+          text-shadow: 1px 1px 0 #4a260c;
+          line-height: 1.3;
+          margin-bottom: clamp(0.3rem, 1.5vw, 0.5rem);
+        ">
+          💰 MONEDAS
+        </div>
+        <div style="
+          color: #ffcc5c;
+          font-family: 'Press Start 2P', monospace;
+          font-size: clamp(0.8rem, 4vw, 1.2rem);
+          text-shadow: 2px 2px 0 #4a260c;
+          font-weight: bold;
+        ">
+          {{ monedas }}
+        </div>
+      </div>
+
+      <!-- Información de la cuenta -->
+      <div style="
+        background: rgba(38, 25, 18, 0.85);
+        border: 2px solid #8c4520;
+        border-radius: clamp(8px, 2vw, 12px);
+        padding: clamp(0.8rem, 3vw, 1.2rem);
+        backdrop-filter: blur(5px);
+      ">
+        <!-- Proveedor -->
+        <div style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: clamp(0.6rem, 2.5vw, 0.9rem);
+          padding-bottom: clamp(0.4rem, 2vw, 0.6rem);
+          border-bottom: 1px solid #7b3b1d;
+        ">
+          <span style="
+            color: #f0d1a6;
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(0.35rem, 1.8vw, 0.45rem);
+          ">
+            PROVEEDOR:
+          </span>
+          <span style="
+            color: #ffcc5c;
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(0.35rem, 1.8vw, 0.45rem);
+            text-shadow: 1px 1px 0 #4a260c;
+          ">
+            {{ getProveedor() }}
+          </span>
+        </div>
+
+        <!-- Verificación -->
+        <div style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: clamp(0.8rem, 3vw, 1rem);
+        ">
+          <span style="
+            color: #f0d1a6;
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(0.35rem, 1.8vw, 0.45rem);
+          ">
+            VERIFICADO:
+          </span>
+          <span
+            [style.color]="estaVerificado() ? '#00ff88' : '#ff5555'"
+            style="
+              font-family: 'Press Start 2P', monospace;
+              font-size: clamp(0.35rem, 1.8vw, 0.45rem);
+              text-shadow: 1px 1px 0 #3a1b08;
+            "
+          >
+            {{ estaVerificado() ? 'SÍ' : 'NO' }}
+          </span>
+        </div>
+
+        <!-- Botón de verificación si no está verificado -->
+        <div
+          *ngIf="!estaVerificado() && perfil.proveedor !== 'google.com'"
+          style="margin-top: clamp(0.8rem, 3vw, 1rem);"
+        >
+          <ion-button
+            expand="block"
+            size="small"
+            (click)="enviarVerificacionEmail()"
+            [disabled]="enviandoVerificacion"
+            style="
+              --background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+              --color: #ffffff;
+              --border-radius: clamp(4px, 1vw, 6px);
+              font-family: 'Press Start 2P', monospace;
+              font-size: clamp(0.3rem, 1.5vw, 0.4rem);
+              min-height: clamp(32px, 8vw, 40px);
+              --padding-top: clamp(0.3rem, 1.5vw, 0.5rem);
+              --padding-bottom: clamp(0.3rem, 1.5vw, 0.5rem);
+              border: 1px solid #00c853;
+              text-shadow: 1px 1px 0 #1b5e20;
+            "
+          >
+            {{ enviandoVerificacion ? 'ENVIANDO...' : '📧 VERIFICAR EMAIL' }}
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div style="
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.6rem, 2.5vw, 0.9rem);
+      width: 100%;
+      max-width: 280px;
+      margin-top: auto;
+      padding-bottom: clamp(1rem, 4vw, 2rem);
+    ">
+      <!-- Botón Tienda -->
+      <ion-button
+        class="btn-jugar"
+        routerLink="/tienda"
+        style="
+          --background: linear-gradient(135deg, #ffb000 0%, #ff4800 100%);
+          --color: #2b1007;
+          --border-radius: clamp(6px, 1.5vw, 8px);
+          border: 2px solid #803000;
+          font-family: 'Press Start 2P', monospace;
+          font-size: clamp(0.45rem, 2.2vw, 0.6rem);
+          min-height: clamp(45px, 11vw, 55px);
+          text-shadow: 1px 1px 0 #ffe3b3;
+          box-shadow: 0 4px 12px rgba(255, 176, 0, 0.3);
+          --padding-top: clamp(0.5rem, 2vw, 0.8rem);
+          --padding-bottom: clamp(0.5rem, 2vw, 0.8rem);
+        "
+      >
+        🛒 IR A LA TIENDA
+      </ion-button>
+
+      <!-- Botón Actualizar -->
+      <ion-button
+        style="
+          --background: rgba(59, 30, 18, 0.9);
+          --color: #ffcc5c;
+          --border-radius: clamp(6px, 1.5vw, 8px);
+          border: 2px solid #8c4520;
+          font-family: 'Press Start 2P', monospace;
+          font-size: clamp(0.4rem, 2vw, 0.55rem);
+          min-height: clamp(40px, 10vw, 50px);
+          --padding-top: clamp(0.4rem, 2vw, 0.6rem);
+          --padding-bottom: clamp(0.4rem, 2vw, 0.6rem);
+          backdrop-filter: blur(5px);
+        "
+        (click)="actualizarPerfil()"
+      >
+        🔄 ACTUALIZAR PERFIL
+      </ion-button>
+    </div>
   </div>
 </ion-content>
+
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mejoras para dispositivos muy pequeños */
+@media (max-width: 320px) {
+  .perfil-box {
+    padding: 0.5rem !important;
+  }
+}
+
+/* Mejoras para tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .perfil-box {
+    padding: 2rem 3rem !important;
+  }
+}
+
+/* Mejoras para desktop */
+@media (min-width: 1025px) {
+  .perfil-box {
+    padding: 2rem 4rem !important;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+/* Mejora para landscape en móviles */
+@media (max-height: 500px) and (orientation: landscape) {
+  .perfil-box {
+    min-height: auto !important;
+    padding: 1rem !important;
+  }
+
+  .avatar {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+</style>
