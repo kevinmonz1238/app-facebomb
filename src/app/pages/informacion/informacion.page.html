@@ -1,0 +1,179 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d">
+    
+    <ion-buttons slot="start">
+      <ion-menu-button
+        menu="first"
+        style="color: #ffcc5c; font-size: clamp(0.8rem, 4vw, 1.2rem)"
+      ></ion-menu-button>
+    </ion-buttons>
+    
+    <ion-title
+      style="
+        color: #ffcc5c;
+        font-family: 'Press Start 2P', monospace;
+        font-size: clamp(0.7rem, 3.5vw, 0.9rem);
+        text-shadow: 1px 1px 0 #4a260c;
+        text-align: center;
+        padding: 0.5rem;
+      "
+    >
+      INFORMACIÓN
+    </ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="--background: #1b100e;">
+
+  <ion-header collapse="condense">
+    <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d">
+      <ion-title 
+        size="large"
+        style="
+          color: #ffcc5c;
+          font-family: 'Press Start 2P', monospace;
+          text-shadow: 1px 1px 0 #4a260c;
+          font-size: clamp(1.2rem, 5vw, 1.5rem); 
+        "
+      >
+        Creadores
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <style>
+    /* Estilos para que la tarjeta de miembro se vea correctamente */
+    .member-card-col {
+      padding: 10px; 
+    }
+
+    .member-card {
+      /* Fondo y borde de la tarjeta del miembro */
+      background: #2a1815; /* Fondo ligeramente más claro que el principal */
+      border: 2px solid #7b3b1d; /* Borde café */
+      padding: 15px 10px;
+      margin: 10px 0;
+      border-radius: 5px; /* Bordes ligeramente redondeados */
+      height: 100%; 
+    }
+
+    .profile-img {
+      /* Estilo para la imagen de perfil (círculo y borde) */
+      width: 120px;
+      height: 120px;
+      border-radius: 50%; /* Hace la imagen circular */
+      object-fit: cover; 
+      border: 4px solid #7b3b1d; /* Borde café grueso */
+      margin-bottom: 10px;
+    }
+
+    .member-name {
+      /* Nombre (color azul y fuente retro) */
+      color: #3aa2cc; /* Color azul */
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.8rem, 4vw, 1rem);
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    .member-role {
+      /* Rol del miembro (color amarillo) */
+      color: #ffcc5c; /* Color amarillo */
+      font-family: Arial, sans-serif;
+      font-size: clamp(0.7rem, 3.5vw, 0.9rem);
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .member-desc {
+      /* Descripción del trabajo */
+      color: #f0f0f0; /* Color blanco/gris claro */
+      font-family: Arial, sans-serif;
+      font-size: clamp(0.65rem, 3vw, 0.85rem);
+      line-height: 1.4;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 250px;
+    }
+  </style>
+  <h1
+    style="
+      color: #3aa2cc; /* Color azul */
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
+      text-align: center;
+      padding: 1.5rem 0 1rem 0;
+      text-shadow: 2px 2px 0 #000000;
+      letter-spacing: 0.15em;
+    "
+  >
+    EQUIPO CREATIVO
+  </h1>
+
+  <p
+    style="
+      color: #ffcc5c; /* Color amarillo */
+      font-family: Arial, sans-serif;
+      font-size: clamp(0.75rem, 3.5vw, 1rem);
+      text-align: center;
+      padding: 0 1rem 1.5rem 1rem;
+      line-height: 1.5;
+    "
+  >
+    Conoce a los genios detrás de Face-Bomb, un grupo de desarrolladores que siguen siendo alumnos con mochilas llenas de ideas (y quizás de contrabando). Entre risas, código y un par de librazos, lograron convertir una travesura escolar en una aventura épica. 👾💻
+  </p>
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      
+      <ion-col size="12" size-md="4" size-lg="3" class="ion-text-center member-card-col">
+        <div class="member-card">
+          <!-- <img src="assets/img/lenin.png" alt="Foto de Lenin" class="profile-img" /> -->
+          <h2 class="member-name">Lenin</h2>
+          <p class="member-role">Director de Arte & UI/UX</p>
+          <p class="member-desc">Diseño visual, interfaces y coherencia estética entre plataformas.</p>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" size-md="4" size-lg="3" class="ion-text-center member-card-col">
+        <div class="member-card">
+          <!-- <img src="assets/img/octavio.png" alt="Foto de Octavio" class="profile-img" /> -->
+          <h2 class="member-name">Octavio</h2>
+          <p class="member-role">Líder de Programación</p>
+          <p class="member-desc">Programación principal en Unity y soporte técnico entre plataformas.</p>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" size-md="4" size-lg="3" class="ion-text-center member-card-col">
+        <div class="member-card">
+          <!-- <img src="assets/img/brandon.png" alt="Foto de Brandon" class="profile-img" /> -->
+          <h2 class="member-name">Brandon</h2>
+          <p class="member-role">Artista 3D</p>
+          <p class="member-desc">Modelado, texturas y optimización de assets para Unity.</p>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" size-md="4" size-lg="3" class="ion-text-center member-card-col">
+        <div class="member-card">
+          
+          <h2 class="member-name">Kevin</h2>
+          <p class="member-role">Animador</p>
+          <p class="member-desc">Animación de personajes y efectos visuales.</p>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" size-md="4" size-lg="3" class="ion-text-center member-card-col">
+        <div class="member-card">
+          <!-- <img src="assets/img/alan.png" alt="Foto de Alan" class="profile-img" /> -->
+          <h2 class="member-name">Alan</h2>
+          <p class="member-role">Diseñador de Sonido</p>
+          <p class="member-desc">Música, ambientación y efectos de sonido para el videojuego.</p>
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

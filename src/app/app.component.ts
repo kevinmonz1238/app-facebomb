@@ -34,8 +34,11 @@ export class AppComponent {
     { icono: 'cart-outline', nombre: 'Tienda', ruta: '/tienda', requiereLogin: true },
     { icono: 'bag-handle-outline', nombre: 'Carrito', ruta: '/carrito', requiereLogin: true },
 
-    // INFORMACIÓN Y AYUDA
-    { icono: 'information-circle-outline', nombre: 'Información', ruta: '/extras' }
+    // PERSONAJES Y LA INFOMRACIÓN DEL PERSONAJE
+    { icono: 'people-outline', nombre: 'Personajes', ruta: '/extras' },
+
+    //INFROMACION Y AYUDA.
+    { icono: 'information-circle-outline', nombre:'Información', ruta: '/informacion'}
   ];
 
   constructor(private auth: Auth, private router: Router) {

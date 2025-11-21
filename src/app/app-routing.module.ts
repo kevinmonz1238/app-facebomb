@@ -66,7 +66,15 @@ const routes: Routes = [
   {
     path: 'perfil',
     loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },  {
+    path: 'informacion',
+    loadChildren: () => import('./pages/informacion/informacion.module').then( m => m.InformacionPageModule)
   },
+
+  // {
+  //   path: 'informacion',
+  //   loadChildren: () => import('./pages/informacion/informacion.module').then(m =>m.InformacionPageModule)
+  // }
 
 
 ];
