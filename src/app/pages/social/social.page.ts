@@ -10,6 +10,7 @@ export class SocialPage {
 
   irAlJuego() {
     // Redirigir al juego externo
+    // El test interceptará esto con spyOn(window, 'open')
     window.open('https://facebomb.onrender.com/', '_blank');
   }
 }

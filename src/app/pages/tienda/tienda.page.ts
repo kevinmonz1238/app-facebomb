@@ -17,8 +17,8 @@ export class TiendaPage implements OnInit, OnDestroy {
   itemsCarrito: number = 0;
   mensajeExito: string = '';
 
-  private carritoSubscription: Subscription = new Subscription();
-  private productosSubscription: Subscription = new Subscription();
+  private carritoSubscription: Subscription | null = null;
+  private productosSubscription: Subscription | null = null;
 
   constructor(
     private tiendaSrv: TiendaService,
@@ -31,12 +31,15 @@ export class TiendaPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.carritoSubscription.unsubscribe();
-    this.productosSubscription.unsubscribe();
+    this.carritoSubscription?.unsubscribe();
+    this.productosSubscription?.unsubscribe();
   }
 
   cargarProductos() {
     this.cargando = true;
+    // Cancelar suscripción anterior si existe
+    this.productosSubscription?.unsubscribe();
+
     this.productosSubscription = this.tiendaSrv.getProductos().subscribe({
       next: (productos) => {
         this.productos = productos;
@@ -53,6 +56,9 @@ export class TiendaPage implements OnInit, OnDestroy {
   }
 
   suscribirAlCarrito() {
+    // Cancelar suscripción anterior si existe
+    this.carritoSubscription?.unsubscribe();
+
     this.carritoSubscription = this.tiendaSrv.getTotalItemsCarrito().subscribe({
       next: (totalItems) => {
         this.itemsCarrito = totalItems;
@@ -67,6 +73,7 @@ export class TiendaPage implements OnInit, OnDestroy {
 
   async agregar(id: string) {
     const user = this.auth.currentUser;
+
     if (!user) {
       this.mensajeError = 'Debes iniciar sesión para agregar productos al carrito';
       this.ocultarMensajesDespuesDeTiempo();
@@ -76,7 +83,7 @@ export class TiendaPage implements OnInit, OnDestroy {
     try {
       await this.tiendaSrv.agregarAlCarrito(id);
       this.mensajeExito = 'Producto agregado al carrito correctamente';
-      this.mensajeError = '';
+      this.mensajeError = ''; // Limpiar errores previos si hubo
       this.ocultarMensajesDespuesDeTiempo();
       console.log('Producto agregado al carrito:', id);
     } catch (error: any) {
@@ -102,6 +109,7 @@ export class TiendaPage implements OnInit, OnDestroy {
   // Manejar imagen rota
   onErrorImagen(event: any, producto: any) {
     console.log('Error cargando imagen para producto:', producto.nombre);
-    event.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMyNjE5MTIiLz4KICA8cGF0aCBkPSJNODAgNjBDOTMuMjUgNjAgMTA0IDcwLjc1IDEwNCA4NEMxMDQgOTcuMjUgOTMuMjUgMTA4IDgwIDEwOEM2Ni43NSAxMDggNTYgOTcuMjUgNTYgODRDNTYgNzAuNzUgNjYuNzUgNjAgODAgNjBaTTgwIDEyMEM5NiAxMjAgMTEwIDEzMCAxExMCAxNDZWMTcwSDUwVjE0NkM1MCAxMzAgNjQgMTIwIDgwIDEyMFoiIGZpbGw9IiNmZmNjNWMiLz4KPC9zdmc+';
+    // Placeholder en base64 para evitar errores de carga de archivos locales en tests
+    event.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMyNjE5MTIiLz4KICA8cGF0aCBkPSJNODAgNjBDOTMuMjUgNjAgMTA0IDcwLjc1IDEwNCA4NEMxMDQgOTcuMjUgOTMuMjUgMTA4IDgwIDEwOEM2Ni43NSAxMDggNTYgOTcuMjUgNTYgODRDNTYgNzAuNzUgNjYuNzUgNjAgODAgNjBaTTgwIDEyMEM5NiAxMjAgMTEwIDEzMCAxMTAgMTQ2VjE3MEg1MFYxNDZDNTAgMTMwIDY0IDEyMCA4MCAxMjBaIiBmaWxsPSIjZmZjYzVjIi8+Cjwvc3ZnPg==';
   }
 }

@@ -12,10 +12,11 @@ import { Subscription } from 'rxjs';
 export class CarritoPage implements OnInit, OnDestroy {
 
   carrito: any[] = [];
-  total = 0;
+  total: number = 0;
   cargando: boolean = true;
 
-  private carritoSubscription: Subscription = new Subscription();
+  // Inicializamos como null o Subscription vacía, pero gestionamos mejor la limpieza
+  private carritoSubscription: Subscription | null = null;
 
   constructor(
     private tiendaSrv: TiendaService,
@@ -27,11 +28,22 @@ export class CarritoPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.carritoSubscription.unsubscribe();
+    this.desuscribir();
+  }
+
+  // Helper para limpiar suscripciones previas
+  private desuscribir() {
+    if (this.carritoSubscription) {
+      this.carritoSubscription.unsubscribe();
+      this.carritoSubscription = null;
+    }
   }
 
   suscribirAlCarrito() {
     this.cargando = true;
+
+    // Limpiamos cualquier suscripción anterior para evitar duplicados en memoria
+    this.desuscribir();
 
     this.carritoSubscription = this.tiendaSrv.getCarrito().subscribe({
       next: (carrito) => {
@@ -55,9 +67,8 @@ export class CarritoPage implements OnInit, OnDestroy {
   }
 
   recargarCarrito() {
-    this.cargando = true;
-    // Nos resuscribimos para forzar una nueva consulta
-    this.carritoSubscription.unsubscribe();
+    // Reutilizamos la lógica de desuscribir que ya está en suscribirAlCarrito
+    // al llamar a suscribirAlCarrito de nuevo, se reinicia el proceso.
     this.suscribirAlCarrito();
   }
 
@@ -74,7 +85,6 @@ export class CarritoPage implements OnInit, OnDestroy {
     try {
       console.log('Cambiando cantidad:', id, nuevaCantidad);
       await this.tiendaSrv.cambiarCantidad(id, nuevaCantidad);
-      // No necesitamos forzar recarga ya que la suscripción se actualiza automáticamente
     } catch (error) {
       console.error('Error cambiando cantidad:', error);
       this.mostrarError('Error al cambiar la cantidad');
@@ -85,7 +95,6 @@ export class CarritoPage implements OnInit, OnDestroy {
     try {
       console.log('Eliminando producto:', id);
       await this.tiendaSrv.eliminarDelCarrito(id);
-      // No necesitamos forzar recarga ya que la suscripción se actualiza automáticamente
     } catch (error) {
       console.error('Error eliminando producto:', error);
       this.mostrarError('Error al eliminar el producto');
@@ -98,9 +107,11 @@ export class CarritoPage implements OnInit, OnDestroy {
       return;
     }
 
+    const totalItems = this.carrito.reduce((acc, item) => acc + (item.cantidad || 1), 0);
+
     const alert = await this.alertController.create({
       header: '¡CONFIRMAR COMPRA!',
-      message: `¿Estás seguro de que quieres comprar ${this.carrito.reduce((total, item) => total + (item.cantidad || 1), 0)} productos por ${this.total} monedas?`,
+      message: `¿Estás seguro de que quieres comprar ${totalItems} productos por ${this.total} monedas?`,
       buttons: [
         {
           text: 'CANCELAR',
@@ -124,8 +135,6 @@ export class CarritoPage implements OnInit, OnDestroy {
       console.log('Procesando compra...', this.carrito);
       const totalItems = this.carrito.reduce((total, item) => total + (item.cantidad || 1), 0);
 
-      // Aquí iría la lógica real de compra
-      // Por ahora solo vaciamos el carrito
       await this.tiendaSrv.vaciarCarrito();
 
       const alert = await this.alertController.create({
@@ -151,26 +160,16 @@ export class CarritoPage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  // Obtener nombre del producto
   getNombreProducto(item: any): string {
-    if (item.producto?.nombre) {
-      return item.producto.nombre;
-    }
-    // Si no hay producto, intentar obtener del ID
-    return `Producto ${item.productoId || item.id}`;
+    return item.producto?.nombre || `Producto ${item.productoId || item.id}`;
   }
 
-  // Obtener precio del producto
   getPrecioProducto(item: any): number {
     return item.producto?.precio || 100;
   }
 
-  // Obtener imagen del producto
   getImagenProducto(item: any): string {
-    if (item.producto?.imagen) {
-      return item.producto.imagen;
-    }
-    return this.getImagenPorDefecto();
+    return item.producto?.imagen || this.getImagenPorDefecto();
   }
 
   getImagenPorDefecto(): string {

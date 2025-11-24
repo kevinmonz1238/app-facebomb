@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Personajes } from 'src/app/services/personajes';
-import { Personajes as PersonajesApi } from '../../componentes/interfaces/interfaces';
-import { RespuestaBD } from '../../componentes/interfaces/interfaces';
 import { ModalController } from '@ionic/angular';
 import { DetalleComponent } from 'src/app/componentes/detalle/detalle.component';
 import { personajesFirebase } from '../../componentes/interfaces/interfaces';
@@ -14,46 +12,32 @@ import { personajesFirebase } from '../../componentes/interfaces/interfaces';
 })
 export class ExtrasPage implements OnInit {
 
-  // Arreglo que almacenará los personajes obtenidos desde Firebase
+  // Arreglo inicializado para evitar errores de undefined
   personajesRecientes: personajesFirebase[] = [];
 
-  // Se inyectan los servicios necesarios:
-  // - servicioPersonajes: para acceder a los datos de personajes
-  // - modalCtrl: para manejar la apertura y cierre de modales en Ionic
   constructor(
     private servicioPersonajes: Personajes,
     private modalCtrl: ModalController
   ) { }
 
-  // Abre un modal que muestra el detalle de un personaje seleccionado
-  // Recibe el 'id' del personaje como argumento
+  ngOnInit() {
+    // Nos suscribimos al servicio.
+    // Nota: El test burlará (mock) esta llamada.
+    this.servicioPersonajes.getPersonajes().subscribe((respuesta: any[]) => {
+      // Limpiamos el arreglo antes de llenarlo para evitar duplicados si el observable emite más veces
+      this.personajesRecientes = [];
+
+      respuesta.forEach(personaje => {
+        this.personajesRecientes.push(personaje as personajesFirebase);
+      });
+    });
+  }
+
   async verDetalle(id: string) {
     const modal = await this.modalCtrl.create({
-      component: DetalleComponent, // Componente que se mostrará dentro del modal
-      componentProps: { id }        // Se pasa el ID como propiedad al componente DetalleComponent
+      component: DetalleComponent,
+      componentProps: { id }
     });
-    modal.present(); // Muestra el modal en pantalla
+    await modal.present();
   }
-
-  // Método del ciclo de vida de Angular que se ejecuta al inicializar el componente
-  ngOnInit() {
-    // Llama al servicio para obtener la lista de personajes almacenados en Firebase
-    // Luego, agrega cada personaje recibido al arreglo personajesRecientes
-    this.servicioPersonajes.getPersonajes().subscribe((respuesta) => {
-      respuesta.forEach(personaje => {
-        this.personajesRecientes.push(<personajesFirebase>personaje);
-      });
-    });
-  }
-
-  /*
-  // Versión anterior (comentada) que obtenía datos desde una API
-  ngOnInit() {
-    this.servicioPersonajes.getDatos()
-      .subscribe((resp: RespuestaBD) => {
-        console.log('Personajes', resp);
-        this.personajesRecientes = resp.data;
-      });
-  }
-  */
 }

@@ -1,380 +1,103 @@
 <ion-header [translucent]="true">
-  <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d">
-    <ion-row class="ion-align-items-center" style="padding: 0 0.5rem">
-      <ion-col size="auto" style="padding: 0">
-        <ion-menu-button
-          style="
-            color: #ffcc5c;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(0.7rem, 4vw, 1rem);
-            margin: 0;
-          "
-        >
-        </ion-menu-button>
+  <ion-toolbar class="toolbar-custom">
+    <ion-row class="toolbar-row">
+      <ion-col size="auto">
+        <ion-menu-button class="menu-btn"></ion-menu-button>
       </ion-col>
-      <ion-col style="padding: 0">
-        <ion-title
-          style="
-            color: #ffcc5c;
-            font-weight: 600;
-            font-size: clamp(0.6rem, 3.5vw, 0.8rem);
-            letter-spacing: 1px;
-            font-family: 'Press Start 2P', monospace;
-            text-align: center;
-            padding: 0.5rem 0;
-            line-height: 1.2;
-          "
-        >
-          INICIO
-        </ion-title>
+
+      <ion-col>
+        <ion-title class="titulo">INICIO</ion-title>
       </ion-col>
-      <!-- Columna vacía para balancear el diseño -->
-      <ion-col size="auto" style="padding: 0; width: 44px"></ion-col>
+
+      <ion-col size="auto" class="espacio-vacio"></ion-col>
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
-<ion-content
-  [fullscreen]="true"
-  style="
-    --background: #241a17;
-    color: #f5dba1;
-    font-family: 'Press Start 2P', monospace;
-  "
->
-  <!-- Efecto CRT -->
-  <div
-    style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.1) 0px,
-        rgba(0, 0, 0, 0.1) 1px,
-        transparent 2px
-      );
-      z-index: 9999;
-      opacity: 0.1;
-    "
-  ></div>
+<ion-content [fullscreen]="true" class="content">
 
-  <!-- Banner superior -->
-  <div
-    style="
-      position: relative;
-      width: 100%;
-      height: clamp(250px, 60vh, 400px);
-      overflow: hidden;
-      margin-bottom: -20px;
-      border-bottom: 3px solid #7b3b1d;
-    "
-  >
+  <!-- Overlay CRT -->
+  <div class="crt-overlay"></div>
+
+  <!-- Banner -->
+  <div class="banner">
     <img
       src="assets/icon/facepost.jpg"
-      alt="Face-Bomb"
-      style="
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: brightness(0.7) sepia(0.3);
-      "
+      loading="lazy"
+      alt="Face-Bomb portada"
+      class="banner-img"
     />
 
-    <div
-      style="
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #ffe67b;
-        padding: clamp(0.8rem, 3vw, 1.5rem);
-        background: rgba(27, 16, 14, 0.85);
-        border-radius: 8px;
-        border: 3px solid #ffb000;
-        max-width: 90%;
-        width: auto;
-        text-align: center;
-        box-shadow: 0 0 20px rgba(255, 160, 60, 0.3);
-        text-shadow: 2px 2px 0 #4a260c;
-      "
-    >
-      <h1
-        style="
-          font-size: clamp(0.8rem, 4vw, 1.2rem);
-          margin-bottom: clamp(0.5rem, 2vw, 1rem);
-          color: #ffe67b;
-          text-shadow: 2px 2px 0 #4a260c, 0 0 12px #ffb000;
-          line-height: 1.3;
-        "
-      >
-        ¡BIENVENIDO AL SALÓN TRAVIESO!<br />**FACE-BOMB**
-      </h1>
-      <p
-        style="
-          font-size: clamp(0.5rem, 2.5vw, 0.65rem);
-          color: #f0d1a6;
-          text-shadow: 1px 1px 0 #3a1b08;
-          line-height: 1.4;
-        "
-      >
-        PREPÁRATE PARA LA AVENTURA, VENDE DULCES DENTRO DEL SALÓN DE CLASES Y
-        EVITA QUE LOS PROFESORES TE ATRAPEN.
+    <div class="banner-text">
+      <h1 class="banner-title">¡BIENVENIDO AL SALÓN TRAVIESO!<br />FACE-BOMB</h1>
+      <p class="banner-sub">
+        PREPÁRATE PARA LA AVENTURA, VENDE DULCES DENTRO DEL SALÓN DE CLASES Y EVITA QUE LOS PROFESORES TE ATRAPEN.
       </p>
     </div>
   </div>
 
   <!-- Descripción -->
-  <ion-card
-    style="
-      --background: #261912;
-      color: #f5dba1;
-      margin: -30px 0 0;
-      border-radius: 20px 20px 0 0;
-      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
-      border: 3px solid #8c4520;
-      border-bottom: none;
-      padding: clamp(0.5rem, 2vw, 1rem) 0;
-    "
-  >
-    <ion-card-header style="padding: clamp(0.8rem, 3vw, 1rem)">
-      <ion-card-title
-        style="
-          color: #ffcc5c;
-          text-align: center;
-          font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-          text-shadow: 1px 1px 0 #4a260c;
-          line-height: 1.3;
-        "
-      >
-        ¿QUÉ TE ESPERA EN FACE-BOMB?
-      </ion-card-title>
+  <ion-card class="descripcion-card">
+    <ion-card-header>
+      <ion-card-title class="subtitulo">¿QUÉ TE ESPERA EN FACE-BOMB?</ion-card-title>
     </ion-card-header>
 
-    <ion-card-content
-      style="padding: 0 clamp(0.8rem, 3vw, 1rem) clamp(0.8rem, 3vw, 1rem)"
-    >
-      <p
-        style="
-          color: #f0d1a6;
-          font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-          line-height: 1.5;
-          text-align: justify;
-        "
-      >
-        FACE-BOMB ES UN ARCADE DE EVASIÓN 2D CON UN TOQUE HUMORÍSTICO,
-        AMBIENTADO EN EL CAÓTICO MUNDO DEL SALÓN DE CLASES. PONTE EN LA PIEL DE
-        UN EMPRENDEDOR ESTUDIANTIL CUYO OBJETIVO ES DISTRIBUIR SU VALIOSA
-        MERCANCÍA (¡DULCES!) A TODOS SUS COMPAÑEROS ANTES DE QUE LA CAMPANA
-        SUENE.
+    <ion-card-content>
+      <p class="descripcion-texto">
+        FACE-BOMB ES UN ARCADE DE EVASIÓN 2D CON UN TOQUE HUMORÍSTICO...
       </p>
 
-      <ion-button
-        expand="block"
-        fill="outline"
-        class="ion-margin-top"
-        style="
-          --border-color: #ffb000;
-          --color: #ffb000;
-          --border-width: 2px;
-          margin-top: clamp(0.8rem, 3vw, 1rem);
-          font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-          min-height: 44px;
-        "
-        (click)="toggleVideo()"
-      >
+      <ion-button expand="block" fill="outline" class="btn-outline" (click)="toggleVideo()">
         {{ showVideo ? 'OCULTAR TRÁILER' : 'VER TRÁILER' }}
       </ion-button>
     </ion-card-content>
   </ion-card>
 
   <!-- Video -->
-  <ion-card
-    *ngIf="showVideo"
-    style="
-      --background: #1c110e;
-      border: 3px solid #7b3b1d;
-      margin: clamp(0.8rem, 3vw, 1rem);
-    "
-  >
-    <ion-card-content style="padding: clamp(0.5rem, 2vw, 0.8rem)">
-      <video
-        controls
-        autoplay
-        style="width: 100%; border: 2px solid #ffb000; border-radius: 4px"
-      >
+  <ion-card *ngIf="showVideo" class="video-card">
+    <ion-card-content>
+      <video controls autoplay class="video-player">
         <source src="assets/multi/trilerFACEBOMB.mp4" type="video/mp4" />
-        TU NAVEGADOR NO SOPORTA EL TAG DE VIDEO.
+        Tu navegador no soporta video.
       </video>
     </ion-card-content>
   </ion-card>
 
-  <!-- Cards informativos -->
-  <ion-card
-    style="
-      --background: #261912;
-      color: #f5dba1;
-      margin: clamp(0.8rem, 3vw, 1rem);
-      border: 3px solid #8c4520;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      padding: clamp(0.8rem, 3vw, 1rem);
-    "
-  >
-    <div
-      style="
-        display: flex;
-        align-items: center;
-        margin-bottom: clamp(0.5rem, 2vw, 0.8rem);
-      "
-    >
-      <ion-icon
-        name="heart-dislike-outline"
-        style="
-          font-size: clamp(1.2rem, 5vw, 1.8em);
-          color: #ff5555;
-          margin-right: clamp(0.5rem, 2vw, 0.8rem);
-          flex-shrink: 0;
-        "
-      ></ion-icon>
-      <h3
-        style="
-          margin: 0;
-          font-weight: bold;
-          font-size: clamp(0.6rem, 3vw, 0.8rem);
-          color: #ffcc5c;
-          text-shadow: 1px 1px 0 #4a260c;
-          line-height: 1.3;
-        "
-      >
-        SISTEMA DE VIDAS: ¡CUIDADO CON EL BOMBAZO!
-      </h3>
+  <!-- Información -->
+  <ion-card class="info-card">
+    <div class="info-header">
+      <ion-icon name="heart-dislike-outline" class="info-icon danger"></ion-icon>
+      <h3 class="info-title">SISTEMA DE VIDAS: ¡CUIDADO CON EL BOMBAZO!</h3>
     </div>
-    <p
-      style="
-        font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-        line-height: 1.5;
-        text-align: justify;
-      "
-    >
-      EL ALUMNO INICIA CADA PARTIDA CON 3 VIDAS. CADA VEZ QUE UN PROFESOR TE
-      ACERTE CON UN LIBRO, PIERDES UNA VIDA. SI PIERDES LA ÚLTIMA, EL JUEGO
-      TERMINA.
+    <p class="info-text">
+      EL ALUMNO INICIA CADA PARTIDA CON 3 VIDAS...
     </p>
   </ion-card>
 
-  <ion-card
-    style="
-      --background: #261912;
-      color: #f5dba1;
-      margin: clamp(0.8rem, 3vw, 1rem);
-      border: 3px solid #8c4520;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      padding: clamp(0.8rem, 3vw, 1rem);
-    "
-  >
-    <div
-      style="
-        display: flex;
-        align-items: center;
-        margin-bottom: clamp(0.5rem, 2vw, 0.8rem);
-      "
-    >
-      <ion-icon
-        name="checkmark-circle-outline"
-        style="
-          font-size: clamp(1.2rem, 5vw, 1.8em);
-          color: #00ff88;
-          margin-right: clamp(0.5rem, 2vw, 0.8rem);
-          flex-shrink: 0;
-        "
-      ></ion-icon>
-      <h3
-        style="
-          margin: 0;
-          font-weight: bold;
-          font-size: clamp(0.6rem, 3vw, 0.8rem);
-          color: #ffcc5c;
-          text-shadow: 1px 1px 0 #4a260c;
-          line-height: 1.3;
-        "
-      >
-        CONDICIÓN DE VICTORIA: REPARTO EXITOSO
-      </h3>
+  <ion-card class="info-card">
+    <div class="info-header">
+      <ion-icon name="checkmark-circle-outline" class="info-icon success"></ion-icon>
+      <h3 class="info-title">CONDICIÓN DE VICTORIA: REPARTO EXITOSO</h3>
     </div>
-    <p
-      style="
-        font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-        line-height: 1.5;
-        text-align: justify;
-      "
-    >
-      TU OBJETIVO ES SIMPLE: VENDER Y ENTREGAR DULCES A TODOS TUS COMPAÑEROS DE
-      CLASE. COMPLETA EL REPARTO SIN SER ATRAPADO Y GANARÁS LA PARTIDA.
+    <p class="info-text">
+      TU OBJETIVO ES SIMPLE: VENDER Y ENTREGAR DULCES...
     </p>
   </ion-card>
 
   <!-- Botones inferiores -->
-  <div
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      flex-wrap: wrap;
-      padding: 0 clamp(0.8rem, 3vw, 1rem) clamp(1.5rem, 5vw, 2rem);
-    "
-  >
-    <ion-button
-      style="
-        --background: #3b1e12;
-        --color: #ffcc5c;
-        border: 2px solid #ffb000;
-        font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-        --border-radius: 6px;
-        min-height: 44px;
-        margin: 0;
-      "
-      size="small"
-      (click)="navegar('/social')"
-      >📋 NOVEDADES</ion-button
-    >
+  <div class="botones-container">
+    <ion-button size="small" class="btn-dark" (click)="navegar('/social')">
+      📋 NOVEDADES
+    </ion-button>
 
-    <ion-button
-      style="
-        --background: #3b1e12;
-        --color: #ffcc5c;
-        border: 2px solid #ffb000;
-        font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-        --border-radius: 6px;
-        min-height: 44px;
-        margin: 0;
-      "
-      size="small"
-      (click)="navegar('/extras')"
-      >📚 INFORMACIÓN</ion-button
-    >
+    <ion-button size="small" class="btn-dark" (click)="navegar('/extras')">
+      📚 INFORMACIÓN
+    </ion-button>
 
-    <ion-button
-      style="
-        --background: linear-gradient(90deg, #ffb000 0%, #ff4800 100%);
-        --color: #2b1007;
-        border: 2px solid #803000;
-        --border-radius: 6px;
-        font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-        text-shadow: 1px 1px 0 #ffe3b3;
-        min-height: 44px;
-        margin: 0;
-      "
-      size="small"
-      (click)="navegar('https://facebomb.onrender.com/')"
-      >🎮 IR AL JUEGO</ion-button
-    >
+    <ion-button size="small" class="btn-jugar" (click)="navegar('https://facebomb.onrender.com/')">
+      🎮 IR AL JUEGO
+    </ion-button>
   </div>
 
-  <div style="height: clamp(1.5rem, 5vw, 3rem)"></div>
+  <div class="espacio-final"></div>
 </ion-content>

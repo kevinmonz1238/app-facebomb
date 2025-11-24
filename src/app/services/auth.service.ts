@@ -22,13 +22,17 @@ export class AuthService {
   private googleProvider = new GoogleAuthProvider();
 
   constructor(private auth: Auth, private router: Router) {
-    onAuthStateChanged(this.auth, (user) => {
-      this.userState.next(user);
-    });
+    this.initAuthState(); // Movemos la lógica aquí
 
-    // Configuración adicional para Google
     this.googleProvider.setCustomParameters({
       prompt: 'select_account'
+    });
+  }
+
+  // Método separado para poder testear el callback
+  initAuthState() {
+    onAuthStateChanged(this.auth, (user) => {
+      this.userState.next(user);
     });
   }
 
@@ -49,7 +53,6 @@ export class AuthService {
       this.router.navigate(['/login']);
     });
   }
-
 
   getUser() {
     return this.userState.value;

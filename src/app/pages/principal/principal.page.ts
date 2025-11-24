@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // Permite la navegación entre rutas dentro de la aplicación
-import { NavController } from '@ionic/angular'; // Controlador de navegación propio de Ionic
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+
+// Definición de la interfaz
+interface Elemento {
+  icono: string;
+  nombre: string;
+  ruta: string;
+}
 
 @Component({
   standalone: false,
@@ -13,53 +20,46 @@ export class PrincipalPage implements OnInit {
   // Variable booleana que controla si se muestra o no el video del tráiler
   showVideo: boolean = false;
 
-  // Lista de elementos que se mostrarán en la página principal, con icono, nombre y ruta asociada
+  // Lista de elementos que se mostrarán en la página principal
   elementos: Elemento[] = [
     {
       icono: 'newspaper-outline',
       nombre: 'Novedades',
-      ruta: '/social' // Navegación interna
+      ruta: '/social'
     },
     {
       icono: 'information-circle-outline',
       nombre: 'Información',
-      ruta: '/extras' // Navegación interna
+      ruta: '/extras'
     },
     {
       icono: 'game-controller-outline',
       nombre: 'Jugar',
-      ruta: 'https://facebomb.onrender.com/' // Enlace externo
+      ruta: 'https://facebomb.onrender.com/'
     }
   ];
 
-  // Constructor que inyecta Router y NavController para gestionar la navegación
+  // Inyectamos Router y NavController (aunque Router no se use en 'navegar', se mantiene por si acaso)
   constructor(private router: Router, private navCtrl: NavController) { }
 
-  // Método del ciclo de vida de Angular que se ejecuta al inicializar el componente
   ngOnInit() {
   }
 
-  // Cambia el estado de la variable showVideo para mostrar u ocultar el video
+  // Cambia el estado para mostrar u ocultar el video
   toggleVideo() {
     this.showVideo = !this.showVideo;
   }
 
-  // Controla la navegación según el tipo de ruta (interna o externa)
+  // Controla la navegación
   navegar(ruta: string) {
     if (ruta.startsWith('http')) {
-      // Si la ruta es una URL externa, se abre en una nueva pestaña o ventana
+      // Si es URL externa, usamos window.open
+      // En los tests, esto será interceptado por spyOn(window, 'open')
       window.open(ruta, '_system');
     } else {
-      // Si la ruta es interna, se navega dentro de la aplicación Ionic
+      // Si es ruta interna, usamos NavController
+      // En los tests, esto será interceptado por el mock de navCtrl
       this.navCtrl.navigateForward(ruta);
     }
   }
-
-}
-
-// Interfaz que define la estructura de los objetos dentro del arreglo elementos
-interface Elemento {
-  icono: string;
-  nombre: string;
-  ruta: string;
 }

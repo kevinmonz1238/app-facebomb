@@ -8,9 +8,7 @@ import {
   deleteDoc,
   updateDoc,
   getDoc,
-  getDocs,
-  query,
-  where
+  getDocs
 } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { Observable, of, combineLatest, map, switchMap } from 'rxjs';
@@ -25,34 +23,52 @@ export class TiendaService {
     private auth: Auth
   ) {}
 
-  // Obtener todos los productos disponibles
-  getProductos(): Observable<any[]> {
-    const ref = collection(this.firestore, 'productos');
-    console.log('Consultando productos...');
-    return collectionData(ref, { idField: 'id' }) as Observable<any[]>;
+  // --- WRAPPERS PARA TESTING (Permiten mockear Firebase) ---
+  // Estos métodos encapsulan las llamadas externas para poder espiarlas
+  public getCollectionData(path: string): Observable<any[]> {
+    const ref = collection(this.firestore, path);
+    return collectionData(ref, { idField: 'id' });
   }
 
-  // Obtener información completa de un producto
+  public async getDocSnapshot(path: string) {
+    const ref = doc(this.firestore, path);
+    return getDoc(ref);
+  }
+
+  public async setDocument(path: string, data: any) {
+    const ref = doc(this.firestore, path);
+    return setDoc(ref, data);
+  }
+
+  public async updateDocument(path: string, data: any) {
+    const ref = doc(this.firestore, path);
+    return updateDoc(ref, data);
+  }
+
+  public async deleteDocument(path: string) {
+    const ref = doc(this.firestore, path);
+    return deleteDoc(ref);
+  }
+  // -------------------------------------------------------
+
+  getProductos(): Observable<any[]> {
+    console.log('Consultando productos...');
+    return this.getCollectionData('productos');
+  }
+
   getProducto(productoId: string): Observable<any> {
-    const ref = doc(this.firestore, `productos/${productoId}`);
     return new Observable(observer => {
-      getDoc(ref).then(snapshot => {
+      this.getDocSnapshot(`productos/${productoId}`).then(snapshot => {
         if (snapshot.exists()) {
-          observer.next({
-            id: snapshot.id,
-            ...snapshot.data()
-          });
+          observer.next({ id: snapshot.id, ...snapshot.data() });
         } else {
           observer.next(null);
         }
         observer.complete();
-      }).catch(error => {
-        observer.error(error);
-      });
+      }).catch(error => observer.error(error));
     });
   }
 
-  // Obtener carrito del usuario con información completa de productos
   getCarrito(): Observable<any[]> {
     const user = this.auth.currentUser;
     if (!user) {
@@ -60,16 +76,11 @@ export class TiendaService {
       return of([]);
     }
 
-    const carritoRef = collection(this.firestore, `usuarios/${user.uid}/carrito`);
-    console.log('Consultando carrito para usuario:', user.uid);
-
-    return collectionData(carritoRef, { idField: 'id' }).pipe(
+    // Usamos el wrapper aquí
+    return this.getCollectionData(`usuarios/${user.uid}/carrito`).pipe(
       switchMap((carritoItems: any[]) => {
-        if (carritoItems.length === 0) {
-          return of([]);
-        }
+        if (carritoItems.length === 0) return of([]);
 
-        // Obtener información completa de cada producto
         const productosObservables = carritoItems.map(item =>
           this.getProducto(item.productoId).pipe(
             map(producto => ({
@@ -78,51 +89,37 @@ export class TiendaService {
             }))
           )
         );
-
         return combineLatest(productosObservables);
       })
-    ) as Observable<any[]>;
+    );
   }
 
-  // Agregar producto al carrito
   async agregarAlCarrito(productoId: string): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) throw new Error('Usuario no autenticado');
 
-    // Verificar si el producto existe
-    const producto = await getDoc(doc(this.firestore, `productos/${productoId}`));
-    if (!producto.exists()) {
-      throw new Error('El producto no existe');
-    }
+    const producto = await this.getDocSnapshot(`productos/${productoId}`);
+    if (!producto.exists()) throw new Error('El producto no existe');
 
-    const itemRef = doc(this.firestore, `usuarios/${user.uid}/carrito/${productoId}`);
+    const path = `usuarios/${user.uid}/carrito/${productoId}`;
+    const itemSnapshot = await this.getDocSnapshot(path);
 
-    try {
-      const itemSnapshot = await getDoc(itemRef);
-
-      if (itemSnapshot.exists()) {
-        const currentData = itemSnapshot.data();
-        await updateDoc(itemRef, {
-          cantidad: (currentData?.['cantidad'] || 1) + 1,
-          actualizadoEn: new Date()
-        });
-        console.log('Producto actualizado en carrito:', productoId);
-      } else {
-        await setDoc(itemRef, {
-          productoId,
-          cantidad: 1,
-          agregadoEn: new Date(),
-          actualizadoEn: new Date()
-        });
-        console.log('Producto agregado al carrito:', productoId);
-      }
-    } catch (error) {
-      console.error('Error agregando al carrito:', error);
-      throw error;
+    if (itemSnapshot.exists()) {
+      const currentData = itemSnapshot.data();
+      await this.updateDocument(path, {
+        cantidad: (currentData?.['cantidad'] || 1) + 1,
+        actualizadoEn: new Date()
+      });
+    } else {
+      await this.setDocument(path, {
+        productoId,
+        cantidad: 1,
+        agregadoEn: new Date(),
+        actualizadoEn: new Date()
+      });
     }
   }
 
-  // Cambiar cantidad
   async cambiarCantidad(productoId: string, cantidad: number): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) throw new Error('Usuario no autenticado');
@@ -132,25 +129,18 @@ export class TiendaService {
       return;
     }
 
-    const ref = doc(this.firestore, `usuarios/${user.uid}/carrito/${productoId}`);
-    await updateDoc(ref, {
+    await this.updateDocument(`usuarios/${user.uid}/carrito/${productoId}`, {
       cantidad,
       actualizadoEn: new Date()
     });
-    console.log('Cantidad actualizada:', productoId, cantidad);
   }
 
-  // Eliminar del carrito
   async eliminarDelCarrito(productoId: string): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) throw new Error('Usuario no autenticado');
-
-    const ref = doc(this.firestore, `usuarios/${user.uid}/carrito/${productoId}`);
-    await deleteDoc(ref);
-    console.log('Producto eliminado del carrito:', productoId);
+    await this.deleteDocument(`usuarios/${user.uid}/carrito/${productoId}`);
   }
 
-  // Vaciar carrito
   async vaciarCarrito(): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) throw new Error('Usuario no autenticado');
@@ -158,15 +148,14 @@ export class TiendaService {
     const carritoRef = collection(this.firestore, `usuarios/${user.uid}/carrito`);
     const carritoSnapshot = await getDocs(carritoRef);
 
+    // Nota: getDocs no lo hemos wrappeado porque es menos común,
+    // pero para vaciarCarrito podemos usar un try/catch simple en el test
     const deletePromises = carritoSnapshot.docs.map(docSnapshot =>
-      deleteDoc(doc(this.firestore, `usuarios/${user.uid}/carrito/${docSnapshot.id}`))
+      this.deleteDocument(`usuarios/${user.uid}/carrito/${docSnapshot.id}`)
     );
-
     await Promise.all(deletePromises);
-    console.log('Carrito vaciado');
   }
 
-  // Obtener total de items en carrito
   getTotalItemsCarrito(): Observable<number> {
     return this.getCarrito().pipe(
       map(carrito => carrito.reduce((total, item) => total + (item.cantidad || 1), 0))

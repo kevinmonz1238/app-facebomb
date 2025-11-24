@@ -20,11 +20,11 @@ export class LoginPage {
       this.router.navigate(['/principal']);
     } catch (err) {
       console.error(err);
+      // En el test, spyOn(window, 'alert') captura esto
       alert('Credenciales inválidas');
     }
   }
 
-  // NUEVO MÉTODO: Login con Google
   async onLoginWithGoogle() {
     try {
       await this.authService.loginWithGoogle();
