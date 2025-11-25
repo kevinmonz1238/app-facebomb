@@ -1,65 +1,15 @@
-<ion-header [translucent]="true">
-  <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d">
+<ion-header class="ion-no-border">
+  <ion-toolbar class="store-toolbar">
     <ion-buttons slot="start">
-      <ion-menu-button
-        menu="first"
-        style="color: #ffcc5c; font-size: clamp(0.8rem, 4vw, 1.2rem)"
-      ></ion-menu-button>
+      <ion-menu-button class="retro-menu-btn"></ion-menu-button>
     </ion-buttons>
-    <ion-title
-      style="
-        color: #ffcc5c;
-        font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-        text-shadow: 1px 1px 0 #4a260c;
-        text-align: center;
-        padding: 0.5rem;
-      "
-    >
-      TIENDA
-    </ion-title>
 
-    <!-- Botón del carrito con contador -->
+    <ion-title class="retro-title">TIENDA</ion-title>
+
     <ion-buttons slot="end">
-      <ion-button
-        routerLink="/carrito"
-        style="
-          --color: #ffcc5c;
-          --background: transparent;
-          --padding-start: 0.5rem;
-          --padding-end: 0.5rem;
-          position: relative;
-          margin-right: 0.5rem;
-        "
-      >
-        <ion-icon
-          name="cart"
-          style="font-size: clamp(1rem, 4vw, 1.4rem);"
-        ></ion-icon>
-
-        <!-- Badge/Contador de items -->
-        <div
-          *ngIf="itemsCarrito > 0"
-          style="
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: linear-gradient(135deg, #ff4800 0%, #ff0000 100%);
-            color: #ffffff;
-            border-radius: 50%;
-            width: clamp(18px, 4.5vw, 22px);
-            height: clamp(18px, 4.5vw, 22px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(0.4rem, 1.8vw, 0.5rem);
-            text-shadow: 1px 1px 0 #7b1e00;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-            animation: pulse 2s infinite;
-          "
-        >
+      <ion-button routerLink="/carrito" class="cart-btn">
+        <ion-icon name="cart"></ion-icon>
+        <div *ngIf="itemsCarrito > 0" class="cart-badge swing-in">
           {{ itemsCarrito > 99 ? '99+' : itemsCarrito }}
         </div>
       </ion-button>
@@ -67,376 +17,89 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" style="--background: #241a17">
-  <!-- Efecto CRT -->
-  <div
-    style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.1) 0px,
-        rgba(0, 0, 0, 0.1) 1px,
-        transparent 2px
-      );
-      z-index: 9999;
-      opacity: 0.1;
-    "
-  ></div>
+<ion-content [fullscreen]="true" class="retro-content">
+  <div class="crt-lines"></div>
 
-  <div class="container" style="padding: clamp(0.8rem, 3vw, 1rem)">
+  <div class="main-layout">
 
-    <!-- Mensaje de éxito cuando se agrega al carrito -->
-    <div
-      *ngIf="mensajeExito"
-      style="
-        background: #1b5e20;
-        border: 2px solid #00ff88;
-        border-radius: 8px;
-        padding: clamp(0.8rem, 3vw, 1rem);
-        margin-bottom: clamp(1rem, 4vw, 1.5rem);
-        text-align: center;
-      "
-    >
-      <p
-        style="
-          color: #aaffcc;
-          font-family: 'Press Start 2P', monospace;
-          font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-          margin: 0;
-          line-height: 1.4;
-        "
-      >
-        ✅ {{ mensajeExito }}
-      </p>
+    <div *ngIf="mensajeExito" class="alert-box success slide-in-top">
+      <ion-icon name="checkmark-circle"></ion-icon>
+      <span>{{ mensajeExito }}</span>
     </div>
 
-    <!-- Mensaje de error -->
-    <div
-      *ngIf="mensajeError"
-      style="
-        background: #5c1a1a;
-        border: 2px solid #ff5555;
-        border-radius: 8px;
-        padding: clamp(0.8rem, 3vw, 1rem);
-        margin-bottom: clamp(1rem, 4vw, 1.5rem);
-        text-align: center;
-      "
-    >
-      <p
-        style="
-          color: #ffcccc;
-          font-family: 'Press Start 2P', monospace;
-          font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-          margin: 0;
-          line-height: 1.4;
-        "
-      >
-        ⚠️ {{ mensajeError }}
-      </p>
+    <div *ngIf="mensajeError" class="alert-box error slide-in-top">
+      <ion-icon name="warning"></ion-icon>
+      <span>{{ mensajeError }}</span>
     </div>
 
-    <!-- Header con información del carrito -->
-    <div style="
-      background: rgba(38, 25, 18, 0.8);
-      border: 2px solid #8c4520;
-      border-radius: 8px;
-      padding: clamp(0.8rem, 3vw, 1rem);
-      margin-bottom: clamp(1rem, 4vw, 1.5rem);
-      text-align: center;
-      backdrop-filter: blur(5px);
-    ">
-      <h1
-        class="titulo"
-        style="
-          color: #ffcc5c;
-          font-family: 'Press Start 2P', monospace;
-          font-size: clamp(0.8rem, 4vw, 1.2rem);
-          text-shadow: 2px 2px 0 #4a260c;
-          margin-bottom: clamp(0.5rem, 2vw, 0.8rem);
-          line-height: 1.3;
-        "
-      >
-        TIENDA FACE-BOMB
-      </h1>
+    <div class="store-header-card">
+      <h1 class="store-title">TIENDA FACE-BOMB</h1>
 
-      <!-- Información del carrito -->
-      <div *ngIf="itemsCarrito > 0" style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: clamp(0.5rem, 2vw, 1rem);
-        flex-wrap: wrap;
-      ">
-        <div style="
-          background: rgba(255, 176, 0, 0.2);
-          border: 1px solid #ffb000;
-          border-radius: 6px;
-          padding: clamp(0.4rem, 2vw, 0.6rem);
-        ">
-          <span style="
-            color: #ffcc5c;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(0.4rem, 2vw, 0.5rem);
-            text-shadow: 1px 1px 0 #4a260c;
-          ">
-            🛒 {{ itemsCarrito }} ITEM{{ itemsCarrito > 1 ? 'S' : '' }} EN CARRITO
-          </span>
+      <div class="cart-status" *ngIf="itemsCarrito > 0">
+        <div class="status-pill">
+          🛒 {{ itemsCarrito }} ITEM{{ itemsCarrito > 1 ? 'S' : '' }} EN CARRITO
         </div>
-
-        <ion-button
-          routerLink="/carrito"
-          size="small"
-          style="
-            --background: linear-gradient(90deg, #ffb000 0%, #ff4800 100%);
-            --color: #2b1007;
-            --border-radius: 6px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(0.4rem, 2vw, 0.5rem);
-            min-height: 35px;
-            text-shadow: 1px 1px 0 #ffe3b3;
-            border: 1px solid #803000;
-          "
-        >
+        <ion-button routerLink="/carrito" size="small" class="btn-view-cart">
           VER CARRITO
         </ion-button>
       </div>
 
-      <div *ngIf="itemsCarrito === 0" style="
-        color: #f0d1a6;
-        font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.4rem, 2vw, 0.5rem);
-        text-shadow: 1px 1px 0 #3a1b08;
-      ">
-        🛒 TU CARRITO ESTÁ VACÍO - ¡AGREGA ALGUNOS PRODUCTOS!
+      <div class="cart-status empty" *ngIf="itemsCarrito === 0">
+        🛒 TU CARRITO ESTÁ VACÍO - ¡LLÉNALO DE DULCES!
       </div>
     </div>
 
-    <!-- Estado de carga -->
-    <div
-      *ngIf="cargando"
-      style="text-align: center; padding: clamp(2rem, 8vw, 4rem)"
-    >
-      <div style="
-        width: clamp(40px, 10vw, 60px);
-        height: clamp(40px, 10vw, 60px);
-        border: 3px solid #ffb000;
-        border-top: 3px solid transparent;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto clamp(1rem, 3vw, 1.5rem);
-      "></div>
-      <p
-        style="
-          color: #ffcc5c;
-          font-family: 'Press Start 2P', monospace;
-          font-size: clamp(0.6rem, 3vw, 0.8rem);
-        "
-      >
-        CARGANDO PRODUCTOS...
-      </p>
+    <div *ngIf="cargando" class="loader-container">
+      <div class="retro-spinner"></div>
+      <p>BUSCANDO MERCANCÍA...</p>
     </div>
 
-    <!-- Grid de productos responsive -->
-    <div
-      *ngIf="!cargando"
-      style="
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-        gap: clamp(0.8rem, 3vw, 1rem);
-      "
-    >
-      <ion-card
-        *ngFor="let producto of productos"
-        style="
-          --background: #261912;
-          margin: 0;
-          border: 3px solid #8c4520;
-          border-radius: 12px;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          transition: all 0.3s ease;
-        "
-      >
-        <!-- Imagen del producto -->
-        <img
-          [src]="producto.imagen"
-          (error)="onErrorImagen($event, producto)"
-          style="
-            width: 100%;
-            height: clamp(180px, 35vw, 220px);
-            object-fit: cover;
-            border-bottom: 2px solid #7b3b1d;
-          "
-        />
+    <div *ngIf="!cargando" class="products-grid">
+      <ion-card *ngFor="let producto of productos" class="retro-card product">
 
-        <ion-card-header
-          style="padding: clamp(0.8rem, 3vw, 1rem); flex-shrink: 0"
-        >
-          <ion-card-title
-            style="
-              color: #ffcc5c;
-              font-family: 'Press Start 2P', monospace;
-              font-size: clamp(0.6rem, 3vw, 0.8rem);
-              text-shadow: 1px 1px 0 #4a260c;
-              margin-bottom: 0.5rem;
-              line-height: 1.3;
-            "
-          >
-            {{ producto.nombre || 'Producto' }}
-          </ion-card-title>
-          <ion-card-subtitle
-            style="
-              color: #ffb000;
-              font-family: 'Press Start 2P', monospace;
-              font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-              text-shadow: 1px 1px 0 #4a260c;
-            "
-          >
-            💰 {{ formatearPrecio(producto.precio) }} monedas
-          </ion-card-subtitle>
+        <div class="image-container">
+          <img
+            [src]="producto.imagen"
+            (error)="onErrorImagen($event, producto)"
+            alt="{{ producto.nombre }}"
+          />
+          <div class="scan-effect"></div>
+        </div>
+
+        <ion-card-header>
+          <ion-card-title>{{ producto.nombre || 'Producto' }}</ion-card-title>
+          <ion-card-subtitle>💰 {{ formatearPrecio(producto.precio) }}</ion-card-subtitle>
         </ion-card-header>
 
-        <ion-card-content
-          style="
-            padding: 0 clamp(0.8rem, 3vw, 1rem) clamp(0.8rem, 3vw, 1rem);
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-          "
-        >
-          <p
-            style="
-              color: #f0d1a6;
-              font-family: 'Press Start 2P', monospace;
-              font-size: clamp(0.45rem, 2.2vw, 0.6rem);
-              line-height: 1.5;
-              margin-bottom: clamp(0.8rem, 3vw, 1rem);
-              flex-grow: 1;
-            "
-          >
+        <ion-card-content>
+          <p class="description">
             {{ producto.descripcion || 'Descripción no disponible' }}
           </p>
 
-          <!-- Stock disponible -->
-          <div
-            *ngIf="producto.stock !== undefined"
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: clamp(0.8rem, 3vw, 1rem);
-              padding: clamp(0.4rem, 2vw, 0.6rem);
-              background: rgba(59, 30, 18, 0.6);
-              border-radius: 6px;
-              border: 1px solid #7b3b1d;
-            "
-          >
-            <span
-              style="
-                color: #f0d1a6;
-                font-family: 'Press Start 2P', monospace;
-                font-size: clamp(0.4rem, 2vw, 0.5rem);
-              "
-            >
-              STOCK:
-            </span>
-            <span
-              [style.color]="producto.stock > 0 ? '#00ff88' : '#ff5555'"
-              style="
-                font-family: 'Press Start 2P', monospace;
-                font-size: clamp(0.4rem, 2vw, 0.5rem);
-                text-shadow: 1px 1px 0 #3a1b08;
-              "
-            >
+          <div class="stock-indicator" [class.out-of-stock]="producto.stock === 0">
+            <span>STOCK:</span>
+            <span class="stock-value">
               {{ producto.stock > 0 ? producto.stock + ' DISPONIBLES' : 'AGOTADO' }}
             </span>
           </div>
 
           <ion-button
             expand="block"
-            class="btn-jugar"
+            class="btn-add"
             (click)="agregar(producto.id)"
             [disabled]="producto.stock === 0"
-            style="
-              --background: linear-gradient(90deg, #ffb000 0%, #ff4800 100%);
-              --color: #2b1007;
-              --border-radius: 8px;
-              border: 2px solid #803000;
-              font-family: 'Press Start 2P', monospace;
-              font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-              min-height: 44px;
-              margin: 0;
-              text-shadow: 1px 1px 0 #ffe3b3;
-            "
           >
-            {{ producto.stock === 0 ? 'AGOTADO' : '🛒 AGREGAR AL CARRITO' }}
+            <ion-icon name="cart-outline" slot="start"></ion-icon>
+            {{ producto.stock === 0 ? 'SIN STOCK' : 'AGREGAR' }}
           </ion-button>
         </ion-card-content>
       </ion-card>
     </div>
 
-    <!-- Mensaje si no hay productos -->
-    <div
-      *ngIf="!cargando && productos.length === 0"
-      style="
-        text-align: center;
-        padding: clamp(2rem, 8vw, 4rem);
-        color: #f0d1a6;
-      "
-    >
-      <ion-icon
-        name="alert-circle-outline"
-        style="
-          font-size: clamp(3rem, 12vw, 5rem);
-          color: #ffb000;
-          margin-bottom: clamp(1rem, 4vw, 1.5rem);
-        "
-      ></ion-icon>
-      <p
-        style="
-          font-family: 'Press Start 2P', monospace;
-          font-size: clamp(0.6rem, 3vw, 0.8rem);
-          line-height: 1.4;
-        "
-      >
-        No hay productos disponibles en este momento.
-      </p>
+    <div *ngIf="!cargando && productos.length === 0" class="empty-state">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>NO HAY PRODUCTOS DISPONIBLES EN ESTE MOMENTO.</p>
     </div>
+
   </div>
 </ion-content>
-
-<style>
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    transform: scale(1.1);
-    box-shadow: 0 3px 8px rgba(255, 72, 0, 0.7);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-  }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Mejoras para dispositivos pequeños */
-@media (max-width: 320px) {
-  .container {
-    padding: 0.5rem !important;
-  }
-}
-</style>

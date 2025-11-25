@@ -1,103 +1,97 @@
-<ion-header [translucent]="true">
-  <ion-toolbar class="toolbar-custom">
-    <ion-row class="toolbar-row">
-      <ion-col size="auto">
-        <ion-menu-button class="menu-btn"></ion-menu-button>
-      </ion-col>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button class="retro-menu-btn"></ion-menu-button>
+    </ion-buttons>
 
-      <ion-col>
-        <ion-title class="titulo">INICIO</ion-title>
-      </ion-col>
+    <ion-title class="retro-title">INICIO</ion-title>
 
-      <ion-col size="auto" class="espacio-vacio"></ion-col>
-    </ion-row>
+    <ion-buttons slot="end">
+      <div class="spacer-btn"></div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="content">
+<ion-content [fullscreen]="true" class="retro-content">
+  <div class="crt-lines"></div>
 
-  <!-- Overlay CRT -->
-  <div class="crt-overlay"></div>
-
-  <!-- Banner -->
-  <div class="banner">
-    <img
-      src="assets/icon/facepost.jpg"
-      loading="lazy"
-      alt="Face-Bomb portada"
-      class="banner-img"
-    />
-
-    <div class="banner-text">
-      <h1 class="banner-title">¡BIENVENIDO AL SALÓN TRAVIESO!<br />FACE-BOMB</h1>
-      <p class="banner-sub">
-        PREPÁRATE PARA LA AVENTURA, VENDE DULCES DENTRO DEL SALÓN DE CLASES Y EVITA QUE LOS PROFESORES TE ATRAPEN.
-      </p>
+  <div class="hero-section">
+    <div class="hero-overlay">
+      <div class="hero-text-container">
+        <h1 class="hero-title">
+          ¡BIENVENIDO AL<br />
+          <span class="highlight">SALÓN TRAVIESO!</span>
+        </h1>
+        <div class="hero-badge">FACE-BOMB</div>
+        <p class="hero-subtitle">
+          VENDE DULCES, EVITA A LOS PROFES Y SOBREVIVE AL CAOS ESCOLAR.
+        </p>
+      </div>
     </div>
   </div>
 
-  <!-- Descripción -->
-  <ion-card class="descripcion-card">
-    <ion-card-header>
-      <ion-card-title class="subtitulo">¿QUÉ TE ESPERA EN FACE-BOMB?</ion-card-title>
-    </ion-card-header>
+  <div class="main-container">
 
-    <ion-card-content>
-      <p class="descripcion-texto">
-        FACE-BOMB ES UN ARCADE DE EVASIÓN 2D CON UN TOQUE HUMORÍSTICO...
-      </p>
+    <ion-card class="retro-card warning main-desc">
+      <ion-card-header>
+        <ion-card-title class="card-title">¿QUÉ ES FACE-BOMB?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>UN ARCADE DE EVASIÓN 2D CON UN TOQUE DE HUMOR Y PÍXELES.</p>
+        <ion-button
+          expand="block"
+          fill="outline"
+          class="btn-retro-outline"
+          (click)="toggleVideo()"
+        >
+          {{ showVideo ? 'OCULTAR VIDEO' : 'VER TRÁILER' }}
+          <ion-icon slot="end" name="videocam"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
 
-      <ion-button expand="block" fill="outline" class="btn-outline" (click)="toggleVideo()">
-        {{ showVideo ? 'OCULTAR TRÁILER' : 'VER TRÁILER' }}
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Video -->
-  <ion-card *ngIf="showVideo" class="video-card">
-    <ion-card-content>
-      <video controls autoplay class="video-player">
+    <div *ngIf="showVideo" class="video-wrapper fade-in">
+      <video controls autoplay class="retro-video">
         <source src="assets/multi/trilerFACEBOMB.mp4" type="video/mp4" />
-        Tu navegador no soporta video.
       </video>
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Información -->
-  <ion-card class="info-card">
-    <div class="info-header">
-      <ion-icon name="heart-dislike-outline" class="info-icon danger"></ion-icon>
-      <h3 class="info-title">SISTEMA DE VIDAS: ¡CUIDADO CON EL BOMBAZO!</h3>
     </div>
-    <p class="info-text">
-      EL ALUMNO INICIA CADA PARTIDA CON 3 VIDAS...
-    </p>
-  </ion-card>
 
-  <ion-card class="info-card">
-    <div class="info-header">
-      <ion-icon name="checkmark-circle-outline" class="info-icon success"></ion-icon>
-      <h3 class="info-title">CONDICIÓN DE VICTORIA: REPARTO EXITOSO</h3>
+    <div class="info-grid">
+      <ion-card class="retro-card danger">
+        <div class="card-icon-wrapper">
+          <ion-icon name="heart" class="heart-pulse"></ion-icon>
+        </div>
+        <ion-card-content>
+          <h3>SISTEMA DE VIDAS</h3>
+          <p>INICIAS CON 3 OPORTUNIDADES. ¡CUIDADO CON EL BOMBAZO!</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="retro-card success">
+        <div class="card-icon-wrapper">
+          <ion-icon name="trophy"></ion-icon>
+        </div>
+        <ion-card-content>
+          <h3>VICTORIA</h3>
+          <p>VENDE TODOS LOS DULCES SIN SER ATRAPADO PARA GANAR.</p>
+        </ion-card-content>
+      </ion-card>
     </div>
-    <p class="info-text">
-      TU OBJETIVO ES SIMPLE: VENDER Y ENTREGAR DULCES...
-    </p>
-  </ion-card>
 
-  <!-- Botones inferiores -->
-  <div class="botones-container">
-    <ion-button size="small" class="btn-dark" (click)="navegar('/social')">
-      📋 NOVEDADES
-    </ion-button>
+    <div class="action-buttons">
+      <ion-button class="btn-retro secondary" (click)="navegar('/social')">
+        <ion-icon name="newspaper" slot="start"></ion-icon> NOVEDADES
+      </ion-button>
 
-    <ion-button size="small" class="btn-dark" (click)="navegar('/extras')">
-      📚 INFORMACIÓN
-    </ion-button>
+      <ion-button class="btn-retro secondary" (click)="navegar('/extras')">
+        <ion-icon name="library" slot="start"></ion-icon> INFO
+      </ion-button>
 
-    <ion-button size="small" class="btn-jugar" (click)="navegar('https://facebomb.onrender.com/')">
-      🎮 IR AL JUEGO
-    </ion-button>
+      <ion-button class="btn-retro primary w-100" (click)="navegar('https://facebomb.onrender.com/')">
+        JUGAR AHORA <ion-icon name="game-controller" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="footer-spacer"></div>
   </div>
-
-  <div class="espacio-final"></div>
 </ion-content>

@@ -1,188 +1,92 @@
-<ion-header [translucent]="true">
-  <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d">
+<ion-header class="ion-no-border">
+  <ion-toolbar class="register-toolbar">
+    <!-- Botón Menú -->
     <ion-buttons slot="start">
-      <ion-menu-button
-        menu="first"
-        style="color: #ffcc5c; font-size: clamp(0.8rem, 4vw, 1.2rem)"
-      ></ion-menu-button>
+      <ion-menu-button class="retro-menu-btn"></ion-menu-button>
     </ion-buttons>
-    <ion-title
-      style="
-        color: #ffcc5c;
-        font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-        text-shadow: 1px 1px 0 #4a260c;
-        text-align: center;
-        padding: 0.5rem;
-      "
-    >
-      REGISTRO
-    </ion-title>
+
+    <!-- Título Centrado -->
+    <ion-title class="retro-title">NUEVO JUGADOR</ion-title>
+
+    <!-- Espaciador -->
+    <ion-buttons slot="end">
+      <div class="spacer-btn"></div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<!-- Contenido principal -->
-<ion-content class="fondo" [fullscreen]="true" style="--background: #241a17">
+<ion-content [fullscreen]="true" class="retro-content">
   <!-- Efecto CRT -->
-  <div
-    style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.1) 0px,
-        rgba(0, 0, 0, 0.1) 1px,
-        transparent 2px
-      );
-      z-index: 9999;
-      opacity: 0.1;
-    "
-  ></div>
+  <div class="crt-lines"></div>
 
-  <!-- Contenedor principal del formulario de registro -->
-  <div
-    class="contenedor"
-    style="
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100%;
-      padding: clamp(1rem, 5vw, 2rem);
-    "
-  >
-    <h1
-      class="titulo"
-      style="
-        color: #ffcc5c;
-        font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.8rem, 4vw, 1.2rem);
-        text-align: center;
-        text-shadow: 2px 2px 0 #4a260c;
-        margin-bottom: clamp(1.5rem, 6vw, 2.5rem);
-        line-height: 1.3;
-      "
-    >
-      CREAR CUENTA
-    </h1>
+  <div class="main-layout">
 
-    <!-- Correo -->
-    <ion-item
-      class="input-retro"
-      style="
-        --background: #261912;
-        --color: #f5dba1;
-        border: 2px solid #8c4520;
-        border-radius: 8px;
-        margin-bottom: clamp(0.8rem, 3vw, 1rem);
-        font-family: 'Press Start 2P', monospace;
-        width: 100%;
-        max-width: 400px;
-      "
-    >
-      <ion-icon
-        name="mail-outline"
-        slot="start"
-        style="color: #ffb000; font-size: clamp(1rem, 4vw, 1.2rem)"
-      ></ion-icon>
-      <ion-input
-        placeholder="Correo electrónico"
-        type="email"
-        [(ngModel)]="email"
-        style="
-          color: #f5dba1;
-          font-size: clamp(0.5rem, 2.5vw, 0.7rem);
-          --placeholder-color: #a67c52;
-          --placeholder-opacity: 1;
-        "
-      >
-      </ion-input>
-    </ion-item>
+    <!-- PANEL ARCADE -->
+    <div class="arcade-panel slide-up">
 
-    <!-- Contraseña -->
-    <ion-item
-      class="input-retro"
-      style="
-        --background: #261912;
-        --color: #f5dba1;
-        border: 2px solid #8c4520;
-        border-radius: 8px;
-        margin-bottom: clamp(1.5rem, 6vw, 2.5rem);
-        font-family: 'Press Start 2P', monospace;
-        width: 100%;
-        max-width: 400px;
-      "
-    >
-      <ion-icon
-        name="lock-closed-outline"
-        slot="start"
-        style="color: #ffb000; font-size: clamp(1rem, 4vw, 1.2rem)"
-      ></ion-icon>
-      <ion-input
-        placeholder="Contraseña"
-        type="password"
-        [(ngModel)]="password"
-        style="
-          color: #f5dba1;
-          font-size: clamp(0.5rem, 2.5vw, 0.7rem);
-          --placeholder-color: #a67c52;
-          --placeholder-opacity: 1;
-        "
-      >
-      </ion-input>
-    </ion-item>
+      <div class="panel-header">
+        <ion-icon name="game-controller-outline" class="header-icon"></ion-icon>
+        <h1 class="panel-title">CREAR CUENTA</h1>
+        <p class="panel-subtitle">ÚNETE AL SALÓN TRAVIESO</p>
+      </div>
 
-    <!-- Botón registrar -->
-    <ion-button
-      expand="block"
-      class="btn-jugar"
-      (click)="onRegister()"
-      style="
-        --background: linear-gradient(90deg, #ffb000 0%, #ff4800 100%);
-        --color: #2b1007;
-        --border-radius: 8px;
-        border: 2px solid #803000;
-        font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.5rem, 2.5vw, 0.7rem);
-        min-height: 50px;
-        margin-bottom: clamp(1rem, 4vw, 1.5rem);
-        width: 100%;
-        max-width: 400px;
-        text-shadow: 1px 1px 0 #ffe3b3;
-      "
-    >
-      REGISTRAR
-    </ion-button>
+      <!-- CAJA DE ERROR (Solo visible si hay error) -->
+      <div class="error-box shake-horizontal" *ngIf="mensajeError">
+        <ion-icon name="warning"></ion-icon>
+        <span>{{ mensajeError }}</span>
+      </div>
 
-    <!-- Enlace al login -->
-    <p
-      class="texto-registro"
-      style="
-        color: #f0d1a6;
-        font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.4rem, 2vw, 0.6rem);
-        text-align: center;
-        margin: 0;
-        line-height: 1.4;
-      "
-    >
-      ¿Ya tienes cuenta?
-      <a
-        routerLink="/login"
-        class="link"
-        style="
-          color: #ffb000;
-          text-decoration: none;
-          margin-left: 0.3rem;
-          text-shadow: 1px 1px 0 #4a260c;
-        "
-      >
-        Inicia sesión
-      </a>
-    </p>
+      <div class="form-group">
+
+        <!-- Input Correo -->
+        <div class="input-wrapper">
+          <ion-icon name="mail" class="input-icon"></ion-icon>
+          <ion-input
+            placeholder="CORREO ELECTRÓNICO"
+            type="email"
+            [(ngModel)]="email"
+            class="retro-input"
+          ></ion-input>
+        </div>
+
+        <!-- Input Contraseña -->
+        <div class="input-wrapper">
+          <ion-icon name="key" class="input-icon"></ion-icon>
+          <ion-input
+            placeholder="CONTRASEÑA"
+            type="password"
+            [(ngModel)]="password"
+            class="retro-input"
+          ></ion-input>
+        </div>
+
+        <!-- Input Confirmar Contraseña -->
+        <div class="input-wrapper">
+          <ion-icon name="checkmark-circle" class="input-icon"></ion-icon>
+          <ion-input
+            placeholder="CONFIRMAR CONTRASEÑA"
+            type="password"
+            [(ngModel)]="confirmPassword"
+            class="retro-input"
+          ></ion-input>
+        </div>
+
+        <!-- Botón Registrar -->
+        <ion-button expand="block" class="btn-register" (click)="validarYRegistrar()">
+          <ion-icon name="person-add" slot="start"></ion-icon>
+          REGISTRAR JUGADOR
+        </ion-button>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="panel-footer">
+        <p>¿YA TIENES CUENTA?</p>
+        <a routerLink="/login" class="login-link">
+          <ion-icon name="log-in-outline"></ion-icon> INICIAR SESIÓN
+        </a>
+      </div>
+
+    </div>
   </div>
 </ion-content>

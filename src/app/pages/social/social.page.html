@@ -1,666 +1,142 @@
-<!-- Encabezado principal -->
-<ion-header [translucent]="true">
-  <!-- Barra superior con fondo oscuro y borde decorativo -->
-  <ion-toolbar style="--background: #1b100e; border-bottom: 2px solid #7b3b1d">
-    <!-- Botón del menú lateral -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="news-toolbar">
     <ion-buttons slot="start">
-      <ion-menu-button
-        menu="first"
-        style="color: #ffcc55; font-size: clamp(0.8rem, 4vw, 1.2rem)"
-      ></ion-menu-button>
+      <ion-menu-button class="retro-menu-btn"></ion-menu-button>
     </ion-buttons>
-    <!-- Título principal de la página -->
-    <ion-title
-      style="
-        color: #ffcc5c;
-        font-family: 'Press Start 2P', monospace;
-        font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-        text-shadow: 1px 1px 0 #4a260c;
-        text-align: center;
-        padding: 0.5rem;
-      "
-    >
-      NOVEDADES
-    </ion-title>
+
+    <ion-title class="retro-title">NOVEDADES</ion-title>
+
+    <ion-buttons slot="end">
+      <div class="spacer-btn"></div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<!-- Contenido principal de la página -->
-<ion-content
-  [fullscreen]="true"
-  style="--background: #241a17; font-family: 'Press Start 2P', monospace"
->
-  <!-- Efecto CRT de líneas para estilo retro -->
-  <div
-    style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.1) 0px,
-        rgba(0, 0, 0, 0.1) 1px,
-        transparent 2px
-      );
-      z-index: 9999;
-      opacity: 0.1;
-    "
-  ></div>
+<ion-content [fullscreen]="true" class="retro-content">
+  <div class="crt-lines"></div>
 
-  <!-- Encabezado condensado para scroll -->
-  <ion-header collapse="condense">
-    <ion-toolbar style="--background: rgba(27, 16, 14, 0.9)">
-      <ion-title
-        size="large"
-        style="
-          color: #ffcc5c;
-          font-family: 'Press Start 2P', monospace;
-          font-size: clamp(0.8rem, 4vw, 1.2rem);
-          text-shadow: 2px 2px 0 #4a260c, 0 0 12px #ffb000;
-        "
-      >
-        NOVEDADES FACE-BOMB
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="main-layout">
 
-  <!-- Contenedor principal del contenido -->
-  <div style="padding: clamp(0.8rem, 3vw, 1rem)">
-    <!-- Tarjeta de Última Actualización -->
-    <ion-card
-      style="
-        --background: #261912;
-        margin: clamp(0.8rem, 3vw, 1rem) 0 clamp(1.5rem, 6vw, 2rem) 0;
-        border: 3px solid #ffb000;
-        border-radius: 12px;
-        box-shadow: 0 6px 20px rgba(255, 176, 0, 0.3);
-      "
-    >
-      <!-- Encabezado de la tarjeta -->
-      <ion-card-header
-        style="
-          background: linear-gradient(135deg, #ffb000 0%, #ff4800 100%);
-          border-bottom: 2px solid #803000;
-          padding: clamp(0.8rem, 3vw, 1rem);
-        "
-      >
-        <!-- Título -->
-        <ion-card-title
-          style="
-            color: #2b1007;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(0.6rem, 3vw, 0.8rem);
-            text-shadow: 1px 1px 0 #ffe3b3;
-            line-height: 1.3;
-          "
-        >
-          🚀 ÚLTIMA ACTUALIZACIÓN - v1.2.0
-        </ion-card-title>
-        <!-- Subtítulo -->
-        <ion-card-subtitle
-          style="
-            color: #2b1007;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(0.4rem, 2vw, 0.5rem);
-            margin-top: clamp(0.3rem, 1.5vw, 0.5rem);
-          "
-        >
-          PUBLICADO: 09 NOV 2024
-        </ion-card-subtitle>
-      </ion-card-header>
+    <ion-card class="retro-card update">
+      <div class="card-header-bar">
+        <ion-card-title>🚀 ÚLTIMA ACTUALIZACIÓN v1.2.0</ion-card-title>
+        <div class="card-subtitle">PUBLICADO: 09 NOV 2024</div>
+      </div>
+      <ion-card-content>
+        <div class="list-item">
+          <span class="bullet">►</span>
+          <span>NUEVO SISTEMA DE POWER-UPS CON EFECTOS TEMPORALES</span>
+        </div>
+        <div class="list-item">
+          <span class="bullet">►</span>
+          <span>3 NUEVOS PROFESORES CON PATRONES ÚNICOS</span>
+        </div>
+        <div class="list-item">
+          <span class="bullet">►</span>
+          <span>SALÓN DE CLASES SECRETO DESBLOQUEABLE</span>
+        </div>
+        <div class="list-item">
+          <span class="bullet">►</span>
+          <span>OPTIMIZACIÓN DE RENDIMIENTO MÓVIL</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-      <!-- Contenido de la tarjeta -->
-      <ion-card-content style="padding: clamp(1rem, 4vw, 1.5rem)">
-        <!-- Lista de novedades -->
-        <div
-          style="
-            color: #f0d1a6;
-            font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-            line-height: 1.6;
-          "
-        >
-          <div
-            style="
-              display: flex;
-              align-items: flex-start;
-              margin-bottom: clamp(0.8rem, 3vw, 1rem);
-            "
-          >
-            <span
-              style="
-                color: #ffb000;
-                margin-right: clamp(0.3rem, 1.5vw, 0.5rem);
-                flex-shrink: 0;
-              "
-              >►</span
-            >
-            <span
-              >NUEVO SISTEMA DE POWER-UPS: DULCES ESPECIALES CON EFECTOS
-              TEMPORALES</span
-            >
+    <ion-card class="retro-card future">
+      <div class="card-header-bar">
+        <ion-card-title>🔮 PRÓXIMAMENTE</ion-card-title>
+      </div>
+      <ion-card-content>
+        <div class="feature-box">
+          <ion-icon name="calendar"></ion-icon>
+          <div class="feature-text">
+            <div class="feature-title">MODO MULTIJUGADOR</div>
+            <div class="feature-desc">COMPITE EN TIEMPO REAL - ETA: DIC 2024</div>
           </div>
-          <div
-            style="
-              display: flex;
-              align-items: flex-start;
-              margin-bottom: clamp(0.8rem, 3vw, 1rem);
-            "
-          >
-            <span
-              style="
-                color: #ffb000;
-                margin-right: clamp(0.3rem, 1.5vw, 0.5rem);
-                flex-shrink: 0;
-              "
-              >►</span
-            >
-            <span>3 NUEVOS PROFESORES CON PATRONES DE MOVIMIENTO ÚNICOS</span>
+        </div>
+        <div class="feature-box">
+          <ion-icon name="trophy"></ion-icon>
+          <div class="feature-text">
+            <div class="feature-title">SISTEMA DE LOGROS</div>
+            <div class="feature-desc">DESBLOQUEA RECOMPENSAS ESPECIALES</div>
           </div>
-          <div
-            style="
-              display: flex;
-              align-items: flex-start;
-              margin-bottom: clamp(0.8rem, 3vw, 1rem);
-            "
-          >
-            <span
-              style="
-                color: #ffb000;
-                margin-right: clamp(0.3rem, 1.5vw, 0.5rem);
-                flex-shrink: 0;
-              "
-              >►</span
-            >
-            <span>SALÓN DE CLASES SECRETO DESBLOQUEABLE</span>
-          </div>
-          <div style="display: flex; align-items: flex-start">
-            <span
-              style="
-                color: #ffb000;
-                margin-right: clamp(0.3rem, 1.5vw, 0.5rem);
-                flex-shrink: 0;
-              "
-              >►</span
-            >
-            <span>OPTIMIZACIÓN DE RENDIMIENTO PARA DISPOSITIVOS MÓVILES</span>
+        </div>
+        <div class="feature-box">
+          <ion-icon name="star"></ion-icon>
+          <div class="feature-text">
+            <div class="feature-title">PERSONAJES LEGENDARIOS</div>
+            <div class="feature-desc">4 NUEVOS PERSONAJES ÚNICOS</div>
           </div>
         </div>
       </ion-card-content>
     </ion-card>
 
-    <!-- Tarjeta Próximamente -->
-    <ion-card
-      style="
-        --background: #261912;
-        margin: clamp(0.8rem, 3vw, 1rem) 0;
-        border: 3px solid #00ff88;
-        border-radius: 12px;
-        box-shadow: 0 6px 20px rgba(0, 255, 136, 0.2);
-      "
-    >
-      <ion-card-header
-        style="
-          background: linear-gradient(135deg, #00ff88 0%, #00a858 100%);
-          border-bottom: 2px solid #006633;
-          padding: clamp(0.8rem, 3vw, 1rem);
-        "
-      >
-        <ion-card-title
-          style="
-            color: #002b14;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(0.6rem, 3vw, 0.7rem);
-            text-shadow: 1px 1px 0 #aaffcc;
-            line-height: 1.3;
-          "
-        >
-          🔮 PRÓXIMAMENTE
-        </ion-card-title>
-      </ion-card-header>
+    <ion-card class="retro-card event">
+      <div class="card-header-bar">
+        <ion-card-title>🎉 EVENTO ESPECIAL</ion-card-title>
+      </div>
+      <ion-card-content>
+        <div class="event-center">
+          <div class="event-name">"SEMANA DE LOS DULCES"</div>
+          <div class="event-date">DEL 15 AL 22 DE NOVIEMBRE</div>
+        </div>
 
-      <!-- Contenido Próximamente -->
-      <ion-card-content style="padding: clamp(1rem, 4vw, 1.5rem)">
-        <div
-          style="
-            color: #f0d1a6;
-            font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-            line-height: 1.6;
-          "
-        >
-          <!-- Modo multijugador -->
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              margin-bottom: clamp(0.8rem, 3vw, 1rem);
-              padding: clamp(0.6rem, 2.5vw, 0.8rem);
-              background: rgba(59, 30, 18, 0.6);
-              border-radius: 6px;
-            "
-          >
-            <ion-icon
-              name="calendar"
-              style="
-                color: #00ff88;
-                margin-right: clamp(0.5rem, 2vw, 0.8rem);
-                font-size: clamp(0.6rem, 3vw, 0.8rem);
-                flex-shrink: 0;
-              "
-            ></ion-icon>
-            <div>
-              <div
-                style="
-                  color: #ffcc5c;
-                  margin-bottom: clamp(0.2rem, 1vw, 0.3rem);
-                  font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-                "
-              >
-                MODO MULTIJUGADOR
-              </div>
-              <div style="font-size: clamp(0.45rem, 2.2vw, 0.55rem)">
-                COMPITE CON TUS AMIGOS EN TIEMPO REAL - ETA: DIC 2024
-              </div>
-            </div>
+        <div class="list-item">
+          <span class="bullet star">★</span>
+          <span>VELOCIDAD DE MOVIMIENTO +25%</span>
+        </div>
+        <div class="list-item">
+          <span class="bullet star">★</span>
+          <span>APARICIÓN DE DULCES RAROS x2</span>
+        </div>
+        <div class="list-item">
+          <span class="bullet star">★</span>
+          <span>RECOMPENSAS DE PUNTUACIÓN EXTRA</span>
+        </div>
+
+        <div class="event-footer">
+          <div>¡NO TE PIERDAS ESTE EVENTO!</div>
+          <small>RECOMPENSAS EXCLUSIVAS LIMITADAS</small>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="retro-card community">
+      <div class="card-header-bar">
+        <ion-card-title>📊 ESTADÍSTICAS COMUNITARIAS</ion-card-title>
+      </div>
+      <ion-card-content>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-value">15,847</div>
+            <div class="stat-label">JUGADORES</div>
           </div>
-          <!-- Logros -->
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              margin-bottom: clamp(0.8rem, 3vw, 1rem);
-              padding: clamp(0.6rem, 2.5vw, 0.8rem);
-              background: rgba(59, 30, 18, 0.6);
-              border-radius: 6px;
-            "
-          >
-            <ion-icon
-              name="trophy"
-              style="
-                color: #ffb000;
-                margin-right: clamp(0.5rem, 2vw, 0.8rem);
-                font-size: clamp(0.6rem, 3vw, 0.8rem);
-                flex-shrink: 0;
-              "
-            ></ion-icon>
-            <div>
-              <div
-                style="
-                  color: #ffcc5c;
-                  margin-bottom: clamp(0.2rem, 1vw, 0.3rem);
-                  font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-                "
-              >
-                SISTEMA DE LOGROS
-              </div>
-              <div style="font-size: clamp(0.45rem, 2.2vw, 0.55rem)">
-                DESBLOQUEA LOGROS SECRETOS Y RECOMPENSAS ESPECIALES
-              </div>
-            </div>
+          <div class="stat-box">
+            <div class="stat-value">2.3M</div>
+            <div class="stat-label">VENTAS</div>
           </div>
-          <!-- Personajes legendarios -->
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              padding: clamp(0.6rem, 2.5vw, 0.8rem);
-              background: rgba(59, 30, 18, 0.6);
-              border-radius: 6px;
-            "
-          >
-            <ion-icon
-              name="star"
-              style="
-                color: #ff55ff;
-                margin-right: clamp(0.5rem, 2vw, 0.8rem);
-                font-size: clamp(0.6rem, 3vw, 0.8rem);
-                flex-shrink: 0;
-              "
-            ></ion-icon>
-            <div>
-              <div
-                style="
-                  color: #ffcc5c;
-                  margin-bottom: clamp(0.2rem, 1vw, 0.3rem);
-                  font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-                "
-              >
-                PERSONAJES LEGENDARIOS
-              </div>
-              <div style="font-size: clamp(0.45rem, 2.2vw, 0.55rem)">
-                4 NUEVOS PERSONAJES CON HABILIDADES ÚNICAS
-              </div>
-            </div>
+          <div class="stat-box">
+            <div class="stat-value">48k</div>
+            <div class="stat-label">ESQUIVES</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">7,562</div>
+            <div class="stat-label">VICTORIAS</div>
           </div>
         </div>
       </ion-card-content>
     </ion-card>
 
-    <!-- Tarjeta Evento Especial -->
-    <ion-card
-      style="
-        --background: #261912;
-        margin: clamp(0.8rem, 3vw, 1rem) 0;
-        border: 3px solid #ff55ff;
-        border-radius: 12px;
-        box-shadow: 0 6px 20px rgba(255, 85, 255, 0.2);
-      "
-    >
-      <ion-card-header
-        style="
-          background: linear-gradient(135deg, #ff55ff 0%, #aa00aa 100%);
-          border-bottom: 2px solid #660066;
-          padding: clamp(0.8rem, 3vw, 1rem);
-        "
-      >
-        <ion-card-title
-          style="
-            color: #ffffff;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(0.6rem, 3vw, 0.7rem);
-            text-shadow: 1px 1px 0 #330033;
-            line-height: 1.3;
-          "
-        >
-          🎉 EVENTO ESPECIAL
-        </ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content style="padding: clamp(1rem, 4vw, 1.5rem)">
-        <!-- Información del evento -->
-        <div
-          style="text-align: center; margin-bottom: clamp(0.8rem, 3vw, 1rem)"
-        >
-          <div
-            style="
-              color: #ffcc5c;
-              font-size: clamp(0.6rem, 3vw, 0.8rem);
-              margin-bottom: clamp(0.3rem, 1.5vw, 0.5rem);
-              text-shadow: 1px 1px 0 #4a260c;
-              line-height: 1.3;
-            "
-          >
-            "SEMANA DE LOS DULCES"
-          </div>
-          <div
-            style="
-              color: #f0d1a6;
-              font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-              margin-bottom: clamp(0.8rem, 3vw, 1rem);
-            "
-          >
-            DEL 15 AL 22 DE NOVIEMBRE
-          </div>
-        </div>
-        <!-- Beneficios del evento -->
-        <div
-          style="
-            color: #f0d1a6;
-            font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-            line-height: 1.6;
-          "
-        >
-          <div
-            style="
-              display: flex;
-              align-items: flex-start;
-              margin-bottom: clamp(0.6rem, 2.5vw, 0.8rem);
-            "
-          >
-            <span
-              style="
-                color: #ff55ff;
-                margin-right: clamp(0.3rem, 1.5vw, 0.5rem);
-                flex-shrink: 0;
-              "
-              >★</span
-            >
-            <span>VELOCIDAD DE MOVIMIENTO AUMENTADA +25%</span>
-          </div>
-          <div
-            style="
-              display: flex;
-              align-items: flex-start;
-              margin-bottom: clamp(0.6rem, 2.5vw, 0.8rem);
-            "
-          >
-            <span
-              style="
-                color: #ff55ff;
-                margin-right: clamp(0.3rem, 1.5vw, 0.5rem);
-                flex-shrink: 0;
-              "
-              >★</span
-            >
-            <span>APARICIÓN DE DULCES RAROS DUPLICADA</span>
-          </div>
-          <div
-            style="
-              display: flex;
-              align-items: flex-start;
-              margin-bottom: clamp(0.6rem, 2.5vw, 0.8rem);
-            "
-          >
-            <span
-              style="
-                color: #ff55ff;
-                margin-right: clamp(0.3rem, 1.5vw, 0.5rem);
-                flex-shrink: 0;
-              "
-              >★</span
-            >
-            <span>RECOMPENSAS DE PUNTUACIÓN EXTRA</span>
-          </div>
-          <div style="display: flex; align-items: flex-start">
-            <span
-              style="
-                color: #ff55ff;
-                margin-right: clamp(0.3rem, 1.5vw, 0.5rem);
-                flex-shrink: 0;
-              "
-              >★</span
-            >
-            <span>NUEVOS LOGROS TEMPORALES DISPONIBLES</span>
-          </div>
-        </div>
-        <!-- Mensaje final del evento -->
-        <div
-          style="
-            text-align: center;
-            margin-top: clamp(1rem, 4vw, 1.5rem);
-            padding: clamp(0.8rem, 3vw, 1rem);
-            background: rgba(255, 85, 255, 0.1);
-            border-radius: 6px;
-          "
-        >
-          <div
-            style="
-              color: #ffcc5c;
-              font-size: clamp(0.45rem, 2.2vw, 0.5rem);
-              margin-bottom: clamp(0.2rem, 1vw, 0.3rem);
-            "
-          >
-            ¡NO TE PIERDAS ESTE EVENTO ESPECIAL!
-          </div>
-          <div style="color: #f0d1a6; font-size: clamp(0.4rem, 2vw, 0.4rem)">
-            RECOMPENSAS EXCLUSIVAS DISPONIBLES SOLO DURANTE EL EVENTO
-          </div>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    <!-- Tarjeta Estadísticas de la comunidad -->
-    <ion-card
-      style="
-        --background: #261912;
-        margin: clamp(0.8rem, 3vw, 1rem) 0;
-        border: 3px solid #42a0d8;
-        border-radius: 12px;
-        box-shadow: 0 6px 20px rgba(66, 160, 216, 0.2);
-      "
-    >
-      <ion-card-header
-        style="
-          background: linear-gradient(135deg, #42a0d8 0%, #1a5a8a 100%);
-          border-bottom: 2px solid #0d3a5c;
-          padding: clamp(0.8rem, 3vw, 1rem);
-        "
-      >
-        <ion-card-title
-          style="
-            color: #ffffff;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(0.6rem, 3vw, 0.7rem);
-            text-shadow: 1px 1px 0 #0d3a5c;
-            line-height: 1.3;
-          "
-        >
-          📊 ESTADÍSTICAS COMUNITARIAS
-        </ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content style="padding: clamp(1rem, 4vw, 1.5rem)">
-        <!-- Cuadro de estadísticas -->
-        <div
-          style="
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: clamp(0.8rem, 3vw, 1rem);
-            color: #f0d1a6;
-            font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-          "
-        >
-          <div
-            style="
-              text-align: center;
-              padding: clamp(0.8rem, 3vw, 1rem);
-              background: rgba(59, 30, 18, 0.6);
-              border-radius: 6px;
-            "
-          >
-            <div
-              style="
-                color: #ffcc5c;
-                font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-                margin-bottom: clamp(0.2rem, 1vw, 0.3rem);
-              "
-            >
-              15,847
-            </div>
-            <div>JUGADORES ACTIVOS</div>
-          </div>
-          <div
-            style="
-              text-align: center;
-              padding: clamp(0.8rem, 3vw, 1rem);
-              background: rgba(59, 30, 18, 0.6);
-              border-radius: 6px;
-            "
-          >
-            <div
-              style="
-                color: #ffcc5c;
-                font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-                margin-bottom: clamp(0.2rem, 1vw, 0.3rem);
-              "
-            >
-              2.3M
-            </div>
-            <div>DULCES VENDIDOS</div>
-          </div>
-          <div
-            style="
-              text-align: center;
-              padding: clamp(0.8rem, 3vw, 1rem);
-              background: rgba(59, 30, 18, 0.6);
-              border-radius: 6px;
-            "
-          >
-            <div
-              style="
-                color: #ffcc5c;
-                font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-                margin-bottom: clamp(0.2rem, 1vw, 0.3rem);
-              "
-            >
-              48,291
-            </div>
-            <div>LIBROS ESQUIVADOS</div>
-          </div>
-          <div
-            style="
-              text-align: center;
-              padding: clamp(0.8rem, 3vw, 1rem);
-              background: rgba(59, 30, 18, 0.6);
-              border-radius: 6px;
-            "
-          >
-            <div
-              style="
-                color: #ffcc5c;
-                font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-                margin-bottom: clamp(0.2rem, 1vw, 0.3rem);
-              "
-            >
-              7,562
-            </div>
-            <div>PARTIDAS GANADAS</div>
-          </div>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    <!-- Botón para acceder al juego -->
-    <div style="text-align: center; margin: clamp(1.5rem, 6vw, 2rem) 0">
-      <ion-button
-        (click)="irAlJuego()"
-        style="
-          --background: linear-gradient(135deg, #ffb000 0%, #ff4800 100%);
-          --color: #2b1007;
-          --border-radius: 12px;
-          --padding-top: clamp(0.8rem, 3vw, 1rem);
-          --padding-bottom: clamp(0.8rem, 3vw, 1rem);
-          --padding-start: clamp(1rem, 4vw, 1.5rem);
-          --padding-end: clamp(1rem, 4vw, 1.5rem);
-          font-family: 'Press Start 2P', monospace;
-          font-size: clamp(0.5rem, 2.5vw, 0.7rem);
-          text-shadow: 1px 1px 0 #ffe3b3;
-          border: 3px solid #803000;
-          box-shadow: 0 6px 20px rgba(255, 176, 0, 0.4);
-          min-height: 50px;
-        "
-      >
-        <ion-icon
-          name="play-circle"
-          slot="start"
-          style="font-size: clamp(0.8rem, 3.5vw, 1rem)"
-        ></ion-icon>
+    <div class="footer-action">
+      <ion-button (click)="irAlJuego()" class="btn-join">
+        <ion-icon name="play-circle" slot="start"></ion-icon>
         ¡ÚNETE A LA DIVERSIÓN!
       </ion-button>
     </div>
-  </div>
 
-  <!-- Pie de página -->
-  <div
-    style="
-      text-align: center;
-      padding: clamp(1rem, 4vw, 2rem) clamp(0.8rem, 3vw, 1rem);
-      border-top: 2px solid #7b3b1d;
-      margin-top: clamp(1.5rem, 6vw, 2rem);
-    "
-  >
-    <p
-      style="
-        color: #f0d1a6;
-        font-size: clamp(0.4rem, 2vw, 0.5rem);
-        text-shadow: 1px 1px 0 #3a1b08;
-        margin: 0;
-        line-height: 1.4;
-      "
-    >
-      FACE-BOMB © 2024 - MANTENTE AL DÍA CON LAS ÚLTIMAS NOVEDADES
-    </p>
+    <div class="footer-text">
+      <p>FACE-BOMB © 2024 - MANTENTE AL DÍA</p>
+    </div>
+
   </div>
 </ion-content>

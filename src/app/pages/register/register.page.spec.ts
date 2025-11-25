@@ -27,7 +27,6 @@ describe('RegisterPage', () => {
         { provide: Router, useValue: rSpy },
         { provide: MenuController, useValue: menuSpy },
         { provide: NavController, useValue: navSpy },
-        // CORRECCIÓN CRÍTICA
         {
           provide: ActivatedRoute,
           useValue: {
@@ -52,18 +51,60 @@ describe('RegisterPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería navegar si el registro es exitoso', fakeAsync(() => {
+  it('debería navegar a /principal si el registro es exitoso y datos válidos', fakeAsync(() => {
+    // 1. Configurar datos correctos
+    component.email = 'test@test.com';
+    component.password = '123456';
+    component.confirmPassword = '123456'; // Deben coincidir
+
     authServiceSpy.register.and.returnValue(Promise.resolve({} as any));
-    component.onRegister();
+
+    // 2. Llamar a la NUEVA función
+    component.validarYRegistrar();
     tick();
+
+    // 3. Verificar
+    expect(authServiceSpy.register).toHaveBeenCalledWith('test@test.com', '123456');
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/principal']);
+    expect(component.mensajeError).toBe('');
   }));
 
-  it('debería alertar si el registro falla', fakeAsync(() => {
-    authServiceSpy.register.and.rejectWith(new Error('Error'));
-    spyOn(window, 'alert');
-    component.onRegister();
+  it('debería mostrar error si las contraseñas no coinciden', () => {
+    component.email = 'test@test.com';
+    component.password = '123456';
+    component.confirmPassword = '654321'; // Diferentes
+
+    component.validarYRegistrar();
+
+    expect(authServiceSpy.register).not.toHaveBeenCalled();
+    expect(component.mensajeError).toBe('LAS CONTRASEÑAS NO COINCIDEN');
+  });
+
+  it('debería mostrar error si hay campos vacíos', () => {
+    component.email = '';
+    component.password = '123456';
+    component.confirmPassword = '123456';
+
+    component.validarYRegistrar();
+
+    expect(authServiceSpy.register).not.toHaveBeenCalled();
+    expect(component.mensajeError).toBe('TODOS LOS CAMPOS SON OBLIGATORIOS');
+  });
+
+  it('debería mostrar mensaje de error si Firebase falla', fakeAsync(() => {
+    component.email = 'test@test.com';
+    component.password = '123456';
+    component.confirmPassword = '123456';
+
+    // Simulamos error de email en uso
+    const errorMock = { code: 'auth/email-already-in-use', message: 'Error' };
+    authServiceSpy.register.and.rejectWith(errorMock);
+
+    component.validarYRegistrar();
     tick();
-    expect(window.alert).toHaveBeenCalled();
+
+    expect(authServiceSpy.register).toHaveBeenCalled();
+    // Verificamos que el mensaje de error se asignó a la variable del componente
+    expect(component.mensajeError).toBe('ESTE CORREO YA ESTÁ REGISTRADO');
   }));
 });

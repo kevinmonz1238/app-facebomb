@@ -1,15 +1,270 @@
-/* Efectos hover para los items del menú */
-.menu-item {
+/* --- VARIABLES --- */
+:host {
+  --retro-font: 'Press Start 2P', monospace;
+  --bg-menu: #1b100e;
+  --bg-content: #241a17;
+  --primary: #ffb000;
+  --secondary: #7b3b1d;
+  --text-main: #f0d1a6;
+  --text-highlight: #ffcc5c;
+  --active-item: rgba(255, 176, 0, 0.15);
+}
+
+/* --- CONFIGURACIÓN DEL MENÚ --- */
+ion-menu.retro-menu {
+  --width: 300px; /* Ancho estándar cómodo */
+}
+
+/* --- HEADER --- */
+.menu-toolbar {
+  --background: var(--bg-menu);
+  border-bottom: 2px solid var(--secondary);
+  padding-top: var(--ion-safe-area-top);
+  min-height: calc(56px + var(--ion-safe-area-top));
+  display: flex; align-items: center; justify-content: center;
+}
+
+.menu-title {
+  font-family: var(--retro-font);
+  color: var(--text-highlight);
+  font-size: 0.9rem;
+  text-align: center;
+  text-shadow: 2px 2px 0 #4a260c;
+  letter-spacing: 1px;
+}
+
+/* --- CONTENIDO --- */
+.menu-content {
+  --background: var(--bg-content);
+}
+
+.crt-lines {
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 2px);
+  pointer-events: none; z-index: 0; opacity: 0.1;
+}
+
+.menu-layout {
+  position: relative; z-index: 1;
+  padding: 20px 15px;
+  display: flex; flex-direction: column;
+  height: 100%;
+}
+
+/* === TARJETA DE USUARIO (Logueado) === */
+.user-card-container {
+  margin-bottom: 25px;
+  border-bottom: 1px dashed var(--secondary);
+  padding-bottom: 20px;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.avatar-section {
+  position: relative;
+}
+
+.user-avatar {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  background: #000;
+  object-fit: cover;
+}
+
+.online-badge {
+  position: absolute; bottom: 2px; right: 2px;
+  width: 12px; height: 12px;
+  background: #00ff88;
+  border: 2px solid var(--bg-content);
+  border-radius: 50%;
+  box-shadow: 0 0 5px #00ff88;
+  animation: pulse 2s infinite;
+}
+
+.info-section {
+  flex: 1;
+  min-width: 0; /* Para que el texto trunque bien */
+}
+
+.user-name {
+  font-family: var(--retro-font);
+  color: var(--text-highlight);
+  font-size: 0.7rem;
+  margin: 0 0 5px 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.user-email {
+  font-family: monospace;
+  color: var(--text-main);
+  font-size: 0.65rem;
+  margin: 0 0 5px 0;
+  opacity: 0.8;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.status-text {
+  font-family: var(--retro-font);
+  font-size: 0.45rem;
+  color: #00ff88;
+  .dot { margin-right: 3px; }
+}
+
+.btn-profile {
+  --color: var(--primary);
+  --border-color: var(--primary);
+  --border-radius: 6px;
+  font-family: var(--retro-font);
+  font-size: 0.55rem;
+  height: 35px;
+  margin: 0;
+}
+
+/* === TARJETA INVITADO (No Logueado) === */
+.guest-card-container {
+  margin-bottom: 25px;
+}
+
+.guest-card {
+  background: rgba(59, 30, 18, 0.4);
+  border: 2px solid var(--secondary);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.lock-icon {
+  font-size: 2rem;
+  color: var(--secondary);
+  margin-bottom: 10px;
+}
+
+.guest-msg {
+  font-family: var(--retro-font);
+  color: var(--text-main);
+  font-size: 0.6rem;
+  margin: 0 0 5px 0;
+}
+
+.guest-sub {
+  font-family: monospace;
+  font-size: 0.6rem;
+  color: #888;
+  margin: 0 0 15px 0;
+}
+
+.btn-login {
+  --background: linear-gradient(90deg, #ffb000 0%, #ff4800 100%);
+  --color: #2b1007;
+  --border-radius: 6px;
+  font-family: var(--retro-font);
+  font-size: 0.6rem;
+  box-shadow: 0 4px 0 #803000;
+
+  &:active { transform: translateY(2px); box-shadow: 0 2px 0 #803000; }
+}
+
+/* === LISTA DE NAVEGACIÓN (ESTILO ARCADE) === */
+.nav-list {
+  background: transparent;
+  padding: 0;
+  flex-grow: 1; /* Empuja el footer abajo */
+}
+
+.nav-item {
+  --background: transparent;
+  --padding-start: 10px;
+  --inner-padding-end: 10px;
+  --min-height: 50px;
+  margin-bottom: 10px;
+  border: 2px solid transparent; /* Borde invisible por defecto */
+  border-radius: 8px;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  ion-icon {
+    color: var(--text-main);
+    font-size: 1.2rem;
+    margin-right: 15px;
+    transition: color 0.2s;
+  }
+
+  ion-label {
+    font-family: var(--retro-font);
+    font-size: 0.65rem;
+    color: var(--text-main);
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .arrow-indicator {
+    font-size: 0.8rem;
+    color: transparent; /* Invisible por defecto */
+    transform: translateX(-10px);
+    transition: all 0.2s;
+  }
+
+  /* --- ESTADO HOVER & ACTIVE (La Magia) --- */
+  &:hover, &.selected {
+    --background: rgba(59, 30, 18, 0.6);
+    border-color: var(--primary);
+    box-shadow: 0 0 10px rgba(255, 176, 0, 0.2);
+    transform: translateX(5px); /* Se mueve a la derecha */
+
+    ion-icon { color: var(--primary); }
+    ion-label { color: var(--text-highlight); }
+
+    .arrow-indicator {
+      color: var(--primary);
+      transform: translateX(0); /* Flechita aparece */
+    }
+  }
 }
 
-.menu-item:hover {
-  --background: #3b1e12;
-  border-color: #ffb000 !important;
-  box-shadow: 0 0 15px rgba(255, 176, 0, 0.3);
-  transform: translateY(-2px);
+/* === FOOTER === */
+.menu-footer {
+  margin-top: 20px;
+  border-top: 2px solid var(--secondary);
+  padding-top: 20px;
 }
 
-.menu-item:active {
-  transform: translateY(0px);
+.btn-logout {
+  --background: #5c1a1a;
+  --color: #ffcccc;
+  --border-radius: 6px;
+  font-family: var(--retro-font);
+  font-size: 0.6rem;
+  border: 1px solid #ff5555;
+  margin-bottom: 20px;
+}
+
+.credits {
+  text-align: center;
+}
+
+.copyright {
+  font-family: var(--retro-font);
+  font-size: 0.5rem;
+  color: var(--text-main);
+  margin: 0 0 5px 0;
+}
+
+.slogan {
+  font-family: monospace;
+  font-size: 0.5rem;
+  color: var(--primary);
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* --- ANIMACIONES --- */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(0, 255, 136, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
 }

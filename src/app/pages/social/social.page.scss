@@ -1,0 +1,275 @@
+/* --- VARIABLES GLOBALES --- */
+:host {
+  --retro-font: 'Press Start 2P', monospace;
+  --bg-dark: #241a17;
+  --bg-card: #261912;
+  --text-main: #f0d1a6;
+  --text-light: #fff;
+  --header-bg: #1b100e;
+  --border-color: #7b3b1d;
+}
+
+/* --- HEADER --- */
+.news-toolbar {
+  --background: var(--header-bg);
+  border-bottom: 2px solid var(--border-color);
+  padding-top: var(--ion-safe-area-top);
+  height: calc(56px + var(--ion-safe-area-top));
+  align-items: center;
+}
+
+.retro-menu-btn { color: #ffcc55; }
+.spacer-btn { width: 48px; }
+
+.retro-title {
+  font-family: var(--retro-font);
+  color: #ffcc5c;
+  font-size: clamp(0.7rem, 4vw, 1rem);
+  text-shadow: 2px 2px 0 #4a260c;
+  text-align: center;
+}
+
+/* --- LAYOUT --- */
+.retro-content { --background: var(--bg-dark); }
+
+.crt-lines {
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 2px);
+  pointer-events: none; z-index: 0; opacity: 0.1;
+}
+
+.main-layout {
+  position: relative; z-index: 1;
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* --- TARJETAS GENERÍCAS --- */
+.retro-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+
+  /* Tipografía base */
+  color: var(--text-main);
+  font-family: 'Press Start 2P', monospace; // O una fuente pixel menos ancha para textos largos
+}
+
+.card-header-bar {
+  padding: 12px 16px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+ion-card-title {
+  font-family: var(--retro-font);
+  font-size: clamp(0.6rem, 3.5vw, 0.8rem);
+  color: var(--text-main); /* Se sobreescribe abajo */
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+
+.card-subtitle {
+  font-size: 0.5rem;
+  margin-top: 5px;
+  opacity: 0.8;
+}
+
+/* --- TEMAS DE COLORES (Aquí ocurre la magia) --- */
+
+/* 1. Update (Naranja) */
+.retro-card.update {
+  --theme-color: #ffb000;
+  --theme-gradient: linear-gradient(135deg, #ffb000 0%, #ff4800 100%);
+  --theme-dark: #803000;
+  --text-header: #2b1007;
+
+  border: 3px solid var(--theme-color);
+  box-shadow: 0 6px 20px rgba(255, 176, 0, 0.2);
+
+  .card-header-bar {
+    background: var(--theme-gradient);
+    border-bottom-color: var(--theme-dark);
+    ion-card-title, .card-subtitle { color: var(--text-header); }
+  }
+  .bullet { color: var(--theme-color); }
+}
+
+/* 2. Future (Verde) */
+.retro-card.future {
+  --theme-color: #00ff88;
+  --theme-gradient: linear-gradient(135deg, #00ff88 0%, #00a858 100%);
+  --theme-dark: #006633;
+  --text-header: #002b14;
+
+  border: 3px solid var(--theme-color);
+  box-shadow: 0 6px 20px rgba(0, 255, 136, 0.15);
+
+  .card-header-bar {
+    background: var(--theme-gradient);
+    border-bottom-color: var(--theme-dark);
+    ion-card-title { color: var(--text-header); }
+  }
+  .feature-box ion-icon { color: var(--theme-color); }
+  .feature-title { color: #ffcc5c; }
+}
+
+/* 3. Event (Morado) */
+.retro-card.event {
+  --theme-color: #ff55ff;
+  --theme-gradient: linear-gradient(135deg, #ff55ff 0%, #aa00aa 100%);
+  --theme-dark: #660066;
+
+  border: 3px solid var(--theme-color);
+  box-shadow: 0 6px 20px rgba(255, 85, 255, 0.15);
+
+  .card-header-bar {
+    background: var(--theme-gradient);
+    border-bottom-color: var(--theme-dark);
+    ion-card-title { color: #fff; text-shadow: 1px 1px 0 #303; }
+  }
+  .event-name { color: #ffcc5c; }
+  .bullet.star { color: var(--theme-color); }
+}
+
+/* 4. Community (Azul) */
+.retro-card.community {
+  --theme-color: #42a0d8;
+  --theme-gradient: linear-gradient(135deg, #42a0d8 0%, #1a5a8a 100%);
+  --theme-dark: #0d3a5c;
+
+  border: 3px solid var(--theme-color);
+
+  .card-header-bar {
+    background: var(--theme-gradient);
+    border-bottom-color: var(--theme-dark);
+    ion-card-title { color: #fff; }
+  }
+  .stat-value { color: #ffcc5c; }
+}
+
+/* --- ELEMENTOS INTERNOS --- */
+
+/* Listas generales */
+.list-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  font-size: clamp(0.6rem, 2.5vw, 0.75rem); /* Letra un poco más grande para leer */
+  line-height: 1.5;
+  font-family: 'Courier New', monospace; /* Fuente secundaria legible */
+  font-weight: bold;
+}
+
+.bullet {
+  margin-right: 10px;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+/* Cajas de Features (Verde) */
+.feature-box {
+  display: flex;
+  align-items: center;
+  background: rgba(59, 30, 18, 0.6);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.feature-box ion-icon {
+  font-size: 1.5rem;
+  margin-right: 12px;
+  min-width: 24px;
+}
+
+.feature-text {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+
+.feature-title { font-size: 0.8rem; margin-bottom: 3px; }
+.feature-desc { font-size: 0.6rem; opacity: 0.8; }
+
+/* Centro de Eventos (Morado) */
+.event-center {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.event-name { font-family: var(--retro-font); font-size: 0.8rem; margin-bottom: 5px; }
+.event-date { font-size: 0.6rem; opacity: 0.8; }
+
+.event-footer {
+  text-align: center;
+  background: rgba(255, 85, 255, 0.1);
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 15px;
+  font-size: 0.6rem;
+  color: #ffcc5c;
+}
+
+/* Grid de Estadísticas (Azul) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-box {
+  background: rgba(59, 30, 18, 0.6);
+  border-radius: 6px;
+  padding: 15px 5px;
+  text-align: center;
+}
+
+.stat-value {
+  font-family: var(--retro-font);
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+.stat-label {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 0.65rem;
+  opacity: 0.9;
+}
+
+/* --- FOOTER --- */
+.footer-action {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.btn-join {
+  --background: linear-gradient(135deg, #ffb000 0%, #ff4800 100%);
+  --color: #2b1007;
+  --border-radius: 12px;
+  border: 2px solid #803000;
+  font-family: var(--retro-font);
+  font-size: 0.7rem;
+  height: 50px;
+  box-shadow: 0 6px 0 #803000; /* Efecto 3D */
+  transition: transform 0.1s;
+}
+
+.btn-join:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #803000;
+}
+
+.btn-join ion-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.footer-text {
+  text-align: center;
+  border-top: 2px solid var(--border-color);
+  padding-top: 20px;
+  margin-bottom: 20px;
+  color: var(--text-main);
+  font-size: 0.5rem;
+  font-family: var(--retro-font);
+}

@@ -4,7 +4,7 @@ import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs'; // Importante
+import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('LoginPage', () => {
@@ -14,6 +14,7 @@ describe('LoginPage', () => {
   let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(waitForAsync(() => {
+    // Creamos los espías (Mocks)
     const authSpy = jasmine.createSpyObj('AuthService', ['login', 'loginWithGoogle']);
     const rSpy = jasmine.createSpyObj('Router', ['navigate']);
     const menuSpy = jasmine.createSpyObj('MenuController', ['enable', 'toggle']);
@@ -27,7 +28,6 @@ describe('LoginPage', () => {
         { provide: Router, useValue: rSpy },
         { provide: MenuController, useValue: menuSpy },
         { provide: NavController, useValue: navSpy },
-        // CORRECCIÓN CRÍTICA: ActivatedRoute completo con Observables
         {
           provide: ActivatedRoute,
           useValue: {
@@ -52,31 +52,54 @@ describe('LoginPage', () => {
     expect(component).toBeTruthy();
   });
 
+  // --- LOGIN NORMAL ---
+
   it('debería navegar a /principal si el login normal es exitoso', fakeAsync(() => {
+    // Simulamos que el login funciona
     authServiceSpy.login.and.returnValue(Promise.resolve({} as any));
+
     component.email = 'test@test.com';
     component.password = '123456';
 
     component.onLogin();
-    tick();
+    tick(); // Esperamos a que la promesa se resuelva
 
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/principal']);
   }));
 
-  it('debería mostrar alerta si el login normal falla', fakeAsync(() => {
-    authServiceSpy.login.and.rejectWith(new Error('Error'));
-    spyOn(window, 'alert');
+  it('debería mostrar mensaje de error en la variable si el login falla', fakeAsync(() => {
+    // Simulamos un error de Firebase
+    const errorSimulado = { code: 'auth/wrong-password', message: 'Wrong pass' };
+    authServiceSpy.login.and.rejectWith(errorSimulado);
+
+    component.email = 'test@test.com';
+    component.password = '123456';
 
     component.onLogin();
-    tick();
+    tick(); // Esperamos a que el error sea capturado
 
-    expect(window.alert).toHaveBeenCalled();
+    // VERIFICACIÓN CORREGIDA: Revisamos la variable, no un alert
+    expect(component.mensajeError).toBe('CORREO O CONTRASEÑA INCORRECTOS');
   }));
+
+  // --- LOGIN GOOGLE ---
 
   it('debería navegar si login con Google es exitoso', fakeAsync(() => {
     authServiceSpy.loginWithGoogle.and.returnValue(Promise.resolve({} as any));
+
     component.onLoginWithGoogle();
     tick();
+
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/principal']);
+  }));
+
+  it('debería manejar error en login con Google', fakeAsync(() => {
+    // Simulamos cancelación
+    authServiceSpy.loginWithGoogle.and.rejectWith({ code: 'auth/popup-closed-by-user' });
+
+    component.onLoginWithGoogle();
+    tick();
+
+    expect(component.mensajeError).toBe('INICIO DE SESIÓN CANCELADO');
   }));
 });

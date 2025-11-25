@@ -1,19 +1,227 @@
-/* Efectos para las tarjetas de personajes */
-.personaje-card {
+/* --- VARIABLES --- */
+:host {
+  --retro-font: 'Press Start 2P', monospace;
+  --bg-dark: #241a17;
+  --bg-card: #261912;
+  --primary: #ffb000;
+  --secondary: #7b3b1d;
+  --text-main: #f0d1a6;
+  --text-highlight: #ffcc5c;
+  --header-bg: #1b100e;
+}
+
+/* --- HEADER --- */
+.extras-toolbar {
+  --background: var(--header-bg);
+  border-bottom: 2px solid var(--secondary);
+  padding-top: var(--ion-safe-area-top);
+  height: calc(56px + var(--ion-safe-area-top));
+  align-items: center;
+}
+
+.retro-menu-btn { color: var(--text-highlight); }
+.spacer-btn { width: 48px; }
+
+.retro-title {
+  font-family: var(--retro-font);
+  color: var(--text-highlight);
+  font-size: clamp(0.7rem, 4vw, 1rem);
+  text-shadow: 2px 2px 0 #4a260c;
+  text-align: center;
+}
+
+/* --- LAYOUT --- */
+.retro-content { --background: var(--bg-dark); }
+
+.crt-lines {
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 2px);
+  pointer-events: none; z-index: 0; opacity: 0.1;
+}
+
+.main-layout {
+  position: relative; z-index: 1;
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- TÍTULOS --- */
+.section-header {
+  text-align: center;
+  padding: 20px 0;
+  background: linear-gradient(180deg, rgba(27,16,14,0.8) 0%, transparent 100%);
+  margin-bottom: 20px;
+  border-bottom: 1px dashed var(--secondary);
+}
+
+.main-headline {
+  font-family: var(--retro-font);
+  color: var(--text-highlight);
+  font-size: clamp(0.9rem, 5vw, 1.4rem);
+  text-shadow: 2px 2px 0 #4a260c, 0 0 10px var(--primary);
+  margin: 0 0 10px 0;
+}
+
+.sub-headline {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 0.7rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* --- GRID DE PERSONAJES --- */
+.character-grid {
+  display: grid;
+  /* Responsive: Mínimo 280px de ancho, se ajustan solos */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding-bottom: 40px;
+}
+
+/* --- TARJETA DE PERSONAJE --- */
+.character-card {
+  background: var(--bg-card);
+  border: 3px solid var(--secondary);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(255, 176, 0, 0.3);
+    border-color: var(--primary);
+
+    .glow-border { opacity: 1; }
+  }
 }
 
-.personaje-card:hover {
-  border-color: #ffb000 !important;
-  box-shadow: 0 0 20px rgba(255, 176, 0, 0.4) !important;
-  transform: translateY(-5px);
+.char-badge {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: linear-gradient(135deg, #ffb000 0%, #ff4800 100%);
+  color: #2b1007;
+  font-family: var(--retro-font);
+  font-size: 0.5rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #803000;
+  z-index: 5;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
 }
 
-.personaje-card:hover .card-glow {
-  left: 100%;
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 280px; /* Altura fija para consistencia */
+  background: #000;
+  border-bottom: 3px solid var(--secondary);
+
+  img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9) contrast(1.1);
+  }
 }
 
-.personaje-card:active {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(255, 176, 0, 0.3) !important;
+.scan-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+.card-info {
+  padding: 15px;
+  background: linear-gradient(180deg, rgba(59, 30, 18, 0.95) 0%, var(--bg-card) 100%);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.name-group {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.char-name {
+  color: var(--text-highlight);
+  font-family: var(--retro-font);
+  font-size: 0.9rem;
+  margin: 0 0 5px 0;
+  text-shadow: 2px 2px 0 #4a260c;
+}
+
+.char-lastname {
+  color: var(--text-main);
+  font-family: var(--retro-font);
+  font-size: 0.6rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Estadísticas */
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px dashed var(--secondary);
+  padding-top: 12px;
+  gap: 5px;
+}
+
+.stat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0,0,0,0.2);
+  padding: 8px 4px;
+  border-radius: 6px;
+
+  ion-icon { font-size: 1.2rem; margin-bottom: 4px; filter: drop-shadow(1px 1px 0 #000); }
+  span { font-family: var(--retro-font); font-size: 0.4rem; color: var(--text-main); }
+}
+
+.icon-health { color: #ff5555; }
+.icon-damage { color: #ffb000; }
+.icon-speed { color: #00ff88; }
+
+/* Efecto borde brillante (hover) */
+.glow-border {
+  position: absolute; inset: 0;
+  border-radius: 12px;
+  box-shadow: inset 0 0 20px rgba(255, 176, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* --- EMPTY STATE --- */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-main);
+
+  ion-icon { font-size: 4rem; color: var(--secondary); margin-bottom: 15px; }
+  p { font-family: var(--retro-font); font-size: 0.7rem; }
+}
+
+/* --- FOOTER --- */
+.footer-text {
+  text-align: center;
+  border-top: 2px solid var(--secondary);
+  padding-top: 20px;
+  margin-bottom: 20px;
+  color: #8d6e63;
+  font-size: 0.5rem;
+  font-family: var(--retro-font);
 }

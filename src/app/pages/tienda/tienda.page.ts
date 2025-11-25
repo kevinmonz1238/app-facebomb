@@ -13,10 +13,12 @@ export class TiendaPage implements OnInit, OnDestroy {
 
   productos: any[] = [];
   cargando: boolean = true;
+
+  // Variables para las alertas visuales
   mensajeError: string = '';
-  itemsCarrito: number = 0;
   mensajeExito: string = '';
 
+  itemsCarrito: number = 0;
   private carritoSubscription: Subscription | null = null;
   private productosSubscription: Subscription | null = null;
 
@@ -37,79 +39,84 @@ export class TiendaPage implements OnInit, OnDestroy {
 
   cargarProductos() {
     this.cargando = true;
-    // Cancelar suscripción anterior si existe
-    this.productosSubscription?.unsubscribe();
-
     this.productosSubscription = this.tiendaSrv.getProductos().subscribe({
       next: (productos) => {
         this.productos = productos;
         this.cargando = false;
-        console.log('Productos cargados:', productos.length);
       },
       error: (error) => {
-        console.error('Error cargando productos:', error);
-        this.mensajeError = 'Error al cargar los productos';
+        console.error(error);
+        this.mostrarMensaje('error', 'NO SE PUDO CONECTAR CON EL MERCADO');
         this.cargando = false;
-        this.ocultarMensajesDespuesDeTiempo();
       }
     });
   }
 
   suscribirAlCarrito() {
-    // Cancelar suscripción anterior si existe
-    this.carritoSubscription?.unsubscribe();
-
     this.carritoSubscription = this.tiendaSrv.getTotalItemsCarrito().subscribe({
-      next: (totalItems) => {
-        this.itemsCarrito = totalItems;
-        console.log('Items en carrito:', totalItems);
-      },
-      error: (error) => {
-        console.error('Error cargando carrito:', error);
-        this.itemsCarrito = 0;
-      }
+      next: (total) => this.itemsCarrito = total,
+      error: () => this.itemsCarrito = 0
     });
   }
 
   async agregar(id: string) {
     const user = this.auth.currentUser;
 
+    // 1. Validación de Login
     if (!user) {
-      this.mensajeError = 'Debes iniciar sesión para agregar productos al carrito';
-      this.ocultarMensajesDespuesDeTiempo();
+      this.mostrarMensaje('error', 'DEBES INICIAR SESIÓN PARA COMPRAR');
       return;
     }
 
     try {
+      // Intento agregar al carrito
       await this.tiendaSrv.agregarAlCarrito(id);
-      this.mensajeExito = 'Producto agregado al carrito correctamente';
-      this.mensajeError = ''; // Limpiar errores previos si hubo
-      this.ocultarMensajesDespuesDeTiempo();
-      console.log('Producto agregado al carrito:', id);
+
+      // 2. Éxito
+      this.mostrarMensaje('exito', '¡ITEM AÑADIDO AL INVENTARIO!');
+
     } catch (error: any) {
-      console.error('Error agregando al carrito:', error);
-      this.mensajeError = error.message || 'Error al agregar al carrito';
-      this.mensajeExito = '';
-      this.ocultarMensajesDespuesDeTiempo();
+      console.error(error);
+
+      // 3. Manejo de errores específicos
+      if (error.message?.includes('stock')) {
+        this.mostrarMensaje('error', '¡AGOTADO! YA NO QUEDAN UNIDADES');
+      } else if (error.code === 'unavailable' || error.code === 'network-error') {
+        this.mostrarMensaje('error', 'FALLO DE RED. REVISA TU CONEXIÓN');
+      } else {
+        this.mostrarMensaje('error', 'ERROR EN LA TRANSACCIÓN');
+      }
     }
   }
 
-  private ocultarMensajesDespuesDeTiempo() {
-    setTimeout(() => {
+  // Función auxiliar para manejar los tiempos de los mensajes
+  private mostrarMensaje(tipo: 'exito' | 'error', texto: string) {
+    // Limpiamos el contrario para que no se solapen
+    if (tipo === 'exito') {
       this.mensajeError = '';
+      this.mensajeExito = texto;
+    } else {
       this.mensajeExito = '';
+      this.mensajeError = texto;
+    }
+
+    // Ocultar automáticamente a los 3 segundos
+    setTimeout(() => {
+      this.mensajeExito = '';
+      this.mensajeError = '';
     }, 3000);
   }
 
-  // Formatear precio para mostrar
-  formatearPrecio(precio: number): string {
-    return precio?.toLocaleString('es-MX') || '0';
+ formatearPrecio(precio: number): string {
+    // Validación explicita para evitar errores en tests
+    if (precio === null || precio === undefined) {
+      return '0';
+    }
+    return precio.toLocaleString('es-MX');
   }
 
-  // Manejar imagen rota
   onErrorImagen(event: any, producto: any) {
-    console.log('Error cargando imagen para producto:', producto.nombre);
-    // Placeholder en base64 para evitar errores de carga de archivos locales en tests
-    event.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMyNjE5MTIiLz4KICA8cGF0aCBkPSJNODAgNjBDOTMuMjUgNjAgMTA0IDcwLjc1IDEwNCA4NEMxMDQgOTcuMjUgOTMuMjUgMTA4IDgwIDEwOEM2Ni43NSAxMDggNTYgOTcuMjUgNTYgODRDNTYgNzAuNzUgNjYuNzUgNjAgODAgNjBaTTgwIDEyMEM5NiAxMjAgMTEwIDEzMCAxMTAgMTQ2VjE3MEg1MFYxNDZDNTAgMTMwIDY0IDEyMCA4MCAxMjBaIiBmaWxsPSIjZmZjYzVjIi8+Cjwvc3ZnPg==';
+    // Imagen placeholder si falla la original
+    event.target.src = 'assets/icon/facepost.jpg';
   }
 }

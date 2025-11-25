@@ -1,112 +1,257 @@
-/* Efectos para el botón jugar */
-.btn-jugar {
-  transition: all 0.3s ease-in-out !important;
-  position: relative;
-  overflow: hidden;
+/* --- VARIABLES --- */
+:host {
+  --retro-font: 'Press Start 2P', monospace;
+  --bg-dark: #241a17;
+  --bg-panel: rgba(38, 25, 18, 0.9);
+  --primary: #ffb000;
+  --primary-dark: #803000;
+  --secondary: #7b3b1d;
+  --text-main: #f0d1a6;
+  --text-highlight: #ffcc5c;
+  --header-bg: #1b100e;
 }
 
-.btn-jurar::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
+/* --- HEADER FIX --- */
+.game-toolbar {
+  --background: var(--header-bg);
+  border-bottom: 2px solid var(--secondary);
+  padding-top: var(--ion-safe-area-top);
+  height: calc(56px + var(--ion-safe-area-top));
+  align-items: center;
+}
+
+.retro-menu-btn {
+  color: var(--text-highlight);
+}
+
+.retro-title {
+  font-family: var(--retro-font);
+  color: var(--text-highlight);
+  font-size: clamp(0.7rem, 4vw, 1rem);
+  text-shadow: 2px 2px 0 #4a260c;
+  text-align: center;
+  padding: 0;
+}
+
+.spacer-btn {
+  width: 48px; /* Equilibra el botón de menú */
+}
+
+/* --- FONDO Y CRT --- */
+.retro-content {
+  --background: var(--bg-dark);
+}
+
+.crt-lines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 2px
+  );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.1;
+}
+
+/* --- LAYOUT PRINCIPAL (Centrado en PC) --- */
+.main-layout {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  max-width: 600px; /* Evita que se estire demasiado en tablets */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- POSTER (Imagen) --- */
+.poster-container {
   width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
+  max-width: 320px;
+  margin-bottom: 20px;
 }
 
-.btn-jugar:hover::before {
-  left: 100%;
-}
-
-.btn-jugar:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(255, 176, 0, 0.6) !important;
-  --background: linear-gradient(135deg, #ffc400 0%, #ff3000 100%) !important;
-}
-
-.btn-jugar:active {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 5px 15px rgba(255, 176, 0, 0.4) !important;
-}
-
-/* Efecto de pulsación constante */
-@keyframes pulse-glow {
-  0% { box-shadow: 0 6px 20px rgba(255, 176, 0, 0.4); }
-  50% { box-shadow: 0 6px 30px rgba(255, 176, 0, 0.7); }
-  100% { box-shadow: 0 6px 20px rgba(255, 176, 0, 0.4); }
-}
-
-.btn-jugar {
-  animation: pulse-glow 2s infinite;
-}
-
-/* Efectos para botones secundarios */
-ion-button {
-  transition: all 0.2s ease-in-out !important;
-}
-
-ion-button:hover {
-  --background: #ffb000 !important;
-  --color: #2b1007 !important;
-  box-shadow: 0 0 15px rgba(255, 176, 0, 0.4) !important;
-  transform: translateY(-2px);
-}
-
-/* Efecto de escaneo para la imagen */
-img {
-  position: relative;
+.poster-frame {
+  border: 4px solid var(--secondary);
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  position: relative;
 }
 
-img::after {
-  content: '';
+.game-poster {
+  width: 100%;
+  display: block;
+  filter: brightness(0.9) sepia(0.2) contrast(1.1);
+}
+
+/* Efecto de brillo pasando por la imagen */
+.poster-scanline {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, 
-    transparent 0%, 
-    transparent 50%, 
-    rgba(255, 176, 0, 0.1) 50%, 
-    rgba(255, 176, 0, 0.1) 51%, 
-    transparent 51%, 
-    transparent 100%);
-  background-size: 100% 4px;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 176, 0, 0.1) 50%, transparent 100%);
+  background-size: 100% 200%;
   animation: scan 3s linear infinite;
   pointer-events: none;
 }
 
 @keyframes scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+  0% { background-position: 0% -100%; }
+  100% { background-position: 0% 200%; }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 1.1rem !important;
-  }
-  
-  .btn-jugar {
-    font-size: 0.8rem !important;
-    min-height: 55px !important;
-  }
+/* --- TEXTOS --- */
+.text-center { text-align: center; }
+
+.main-headline {
+  font-family: var(--retro-font);
+  color: var(--text-highlight);
+  font-size: clamp(1rem, 5vw, 1.5rem);
+  text-shadow: 3px 3px 0 #4a260c, 0 0 15px var(--primary);
+  margin: 10px 0;
+  line-height: 1.4;
 }
 
-@media (max-width: 480px) {
-  h1 {
-    font-size: 0.9rem !important;
-  }
-  
-  .btn-jugar {
-    font-size: 0.7rem !important;
-    min-height: 50px !important;
-  }
-  
-  .instruction-box {
-    padding: 1rem !important;
-  }
+.sub-headline {
+  font-family: var(--retro-font);
+  color: var(--text-main);
+  font-size: clamp(0.5rem, 3vw, 0.7rem);
+  text-shadow: 1px 1px 0 #3a1b08;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* --- BOTÓN JUGAR MEGA --- */
+.action-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.btn-jugar-mega {
+  --background: linear-gradient(135deg, #ffb000 0%, #ff4800 100%);
+  --color: #2b1007;
+  --border-radius: 12px;
+  --box-shadow: 0 6px 0 #803000, 0 15px 20px rgba(0,0,0,0.4);
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+  width: 100%;
+  max-width: 350px;
+  min-height: 65px;
+  font-family: var(--retro-font);
+  font-weight: bold;
+  overflow: visible; /* Para que la sombra se vea bien */
+  transition: transform 0.1s;
+  animation: pulse-glow 2s infinite;
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: clamp(0.8rem, 4vw, 1.1rem);
+}
+
+.btn-jugar-mega ion-icon {
+  font-size: 1.4em;
+}
+
+.btn-jugar-mega:active {
+  transform: translateY(4px);
+  --box-shadow: 0 2px 0 #803000; /* Efecto de presionar botón arcade */
+}
+
+@keyframes pulse-glow {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* --- CAJA DE INSTRUCCIONES --- */
+.instructions-box {
+  background: var(--bg-panel);
+  border: 2px solid var(--secondary);
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  margin-bottom: 25px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+.box-title {
+  color: var(--text-highlight);
+  font-family: var(--retro-font);
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-bottom: 2px dashed var(--secondary);
+  padding-bottom: 10px;
+}
+
+.instruction-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  font-family: 'Courier New', monospace; /* Más legible para instrucciones */
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.instruction-item ion-icon {
+  color: var(--primary);
+  margin-right: 10px;
+  font-size: 1.1rem;
+  min-width: 20px;
+  margin-top: 2px;
+}
+
+.instruction-item.danger ion-icon { color: #ff4444; }
+.instruction-item.danger span { color: #ff8888; }
+
+/* --- BOTONES SECUNDARIOS --- */
+.secondary-actions {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.btn-retro.secondary {
+  --background: #3e2723;
+  --color: var(--text-highlight);
+  --border-radius: 8px;
+  --border-width: 2px;
+  --border-style: solid;
+  --border-color: var(--primary);
+  font-family: var(--retro-font);
+  font-size: 0.6rem;
+  height: 45px;
+  flex: 1;
+  min-width: 130px;
+}
+
+/* --- FOOTER --- */
+.footer-text {
+  border-top: 2px solid var(--secondary);
+  padding-top: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.footer-text p {
+  color: #8d6e63;
+  font-family: var(--retro-font);
+  font-size: 0.5rem;
+  line-height: 1.5;
+  margin: 0;
 }

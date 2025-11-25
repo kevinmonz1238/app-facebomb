@@ -1,178 +1,268 @@
-/* General */
-.content {
-  --background: #241a17;
-  color: #f5dba1;
-  font-family: 'Press Start 2P', monospace;
+/* --- VARIABLES --- */
+:host {
+  --retro-font: 'Press Start 2P', monospace;
+  --bg-dark: #241a17;
+  --bg-card: #261912;
+  --primary: #ffb000;
+  --secondary: #7b3b1d;
+  --text-main: #f0d1a6;
+  --header-bg: #1b100e;
 }
 
-/* CRT Overlay */
-.crt-overlay {
+/* --- HEADER FIX (Barra de estado y centrado) --- */
+.header-toolbar {
+  --background: var(--header-bg);
+  border-bottom: 2px solid var(--secondary);
+
+  /* ESTO ARREGLA QUE SE VEA BIEN EN CELULARES CON NOTCH */
+  padding-top: var(--ion-safe-area-top);
+  height: calc(56px + var(--ion-safe-area-top));
+  align-items: center;
+}
+
+.retro-menu-btn {
+  color: var(--primary);
+}
+
+.spacer-btn {
+  width: 48px; /* Mismo ancho que el botón de menú para equilibrar */
+}
+
+.retro-title {
+  font-family: var(--retro-font);
+  color: #ffcc5c;
+  font-size: clamp(0.7rem, 4vw, 1rem);
+  text-shadow: 2px 2px 0 #4a260c;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* --- FONDO Y CRT --- */
+.retro-content {
+  --background: var(--bg-dark);
+}
+
+.crt-lines {
   position: fixed;
   inset: 0;
-  pointer-events: none;
   background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.1) 0px,
-    rgba(0, 0, 0, 0.1) 1px,
-    transparent 2px
+    0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 2px
   );
+  pointer-events: none;
+  z-index: 10;
   opacity: 0.1;
-  z-index: 9999;
 }
 
-/* Header */
-.toolbar-custom {
-  --background: #1b100e;
-  border-bottom: 2px solid #7b3b1d;
-}
-
-.toolbar-row {
-  padding: 0 0.5rem;
-  align-items: center;
-}
-
-.menu-btn {
-  color: #ffcc5c;
-  font-family: 'Press Start 2P', monospace;
-}
-
-.titulo {
-  color: #ffcc5c;
-  text-align: center;
-  font-size: clamp(0.6rem, 3.5vw, 0.8rem);
-}
-
-/* Banner */
-.banner {
+/* --- HERO BANNER (LA IMAGEN QUE ESCALA) --- */
+.hero-section {
   position: relative;
   width: 100%;
-  height: clamp(250px, 60vh, 400px);
-  overflow: hidden;
-  border-bottom: 3px solid #7b3b1d;
+  height: 40vh; /* Ocupa el 40% de la altura visible */
+  min-height: 280px;
+  max-height: 500px;
+
+  /* AQUÍ ESTÁ LA MAGIA DEL ESCALADO */
+  background-image: url('../../../assets/icon/facepost.jpg');
+  background-size: cover; /* Cubre todo el espacio sin deformar */
+  background-position: center top; /* Mantiene el foco arriba/centro */
+  border-bottom: 4px solid var(--secondary);
 }
 
-.banner-img {
+.hero-overlay {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: brightness(0.7) sepia(0.3);
-}
-
-.banner-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(27, 16, 14, 0.85);
-  padding: clamp(0.8rem, 3vw, 1.5rem);
-  border-radius: 8px;
-  border: 3px solid #ffb000;
-  text-align: center;
-  max-width: 90%;
-  color: #ffe67b;
-}
-
-.banner-title {
-  font-size: clamp(0.8rem, 4vw, 1.2rem);
-  text-shadow: 2px 2px 0 #4a260c;
-}
-
-.banner-sub {
-  font-size: clamp(0.5rem, 2.5vw, 0.65rem);
-}
-
-/* Descripción */
-.descripcion-card {
-  --background: #261912;
-  margin-top: -30px;
-  border-radius: 20px 20px 0 0;
-  border: 3px solid #8c4520;
-  border-bottom: none;
-}
-
-.subtitulo {
-  color: #ffcc5c;
-  text-align: center;
-  font-size: clamp(0.7rem, 3.5vw, 0.9rem);
-}
-
-.descripcion-texto {
-  text-align: justify;
-  font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-}
-
-.btn-outline {
-  --border-color: #ffb000;
-  --color: #ffb000;
-}
-
-/* Video */
-.video-card {
-  --background: #1c110e;
-  border: 3px solid #7b3b1d;
-}
-
-.video-player {
-  width: 100%;
-  border: 2px solid #ffb000;
-}
-
-/* Cards */
-.info-card {
-  --background: #261912;
-  border: 3px solid #8c4520;
-  border-radius: 8px;
-  padding: clamp(0.8rem, 3vw, 1rem);
-}
-
-.info-header {
+  /* Degradado para que el texto se lea siempre */
+  background: linear-gradient(to bottom, rgba(27,16,14,0.2), rgba(27,16,14,0.95));
   display: flex;
-  align-items: center;
-}
-
-.info-icon {
-  font-size: clamp(1.2rem, 5vw, 1.8rem);
-  margin-right: clamp(0.5rem, 2vw, 0.8rem);
-}
-
-.info-icon.danger {
-  color: #ff5555;
-}
-
-.info-icon.success {
-  color: #00ff88;
-}
-
-.info-title {
-  color: #ffcc5c;
-  font-size: clamp(0.6rem, 3vw, 0.8rem);
-}
-
-.info-text {
-  text-align: justify;
-  font-size: clamp(0.5rem, 2.5vw, 0.6rem);
-}
-
-/* Botones inferiores */
-.botones-container {
-  display: flex;
+  align-items: flex-end;
   justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.hero-text-container {
+  max-width: 600px;
+  animation: slideUp 0.8s ease-out;
+}
+
+.hero-title {
+  font-family: var(--retro-font);
+  color: #fff;
+  font-size: clamp(1rem, 5vw, 1.6rem);
+  line-height: 1.4;
+  margin: 0;
+  text-shadow: 3px 3px 0 #000;
+}
+
+.hero-title .highlight {
+  color: var(--primary);
+}
+
+.hero-badge {
+  background: #d32f2f;
+  color: white;
+  display: inline-block;
+  font-family: var(--retro-font);
+  font-size: 0.6rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+  box-shadow: 2px 2px 0 #000;
+  transform: rotate(-2deg);
+}
+
+.hero-subtitle {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: #ccc;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.main-container {
+  padding: 16px;
+  max-width: 900px; /* Evita que se vea gigante en PC */
+  margin: 0 auto;
+  position: relative;
+  z-index: 5;
+}
+
+/* --- TARJETAS RETRO --- */
+.retro-card {
+  background: var(--bg-card);
+  border: 2px solid var(--secondary);
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.4);
+  margin-bottom: 20px;
+  color: var(--text-main);
+}
+
+.retro-card ion-card-content {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-align: justify;
+}
+
+.card-title {
+  font-family: var(--retro-font);
+  color: var(--primary);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Colores de bordes */
+.retro-card.warning { border-color: var(--primary); }
+.retro-card.danger { border-color: #ff5555; }
+.retro-card.success { border-color: #00ff88; }
+
+.card-icon-wrapper {
+  background: rgba(0,0,0,0.2);
+  padding: 10px;
+  text-align: center;
+  font-size: 2rem;
+  border-bottom: 1px dashed var(--secondary);
+}
+.heart-pulse { color: #ff4081; animation: pulse 1s infinite; }
+.retro-card h3 {
+  font-family: var(--retro-font);
+  font-size: 0.7rem;
+  margin: 10px 0;
+  color: #fff;
+  text-align: center;
+}
+
+/* --- RESPONSIVIDAD (GRID) --- */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Por defecto 1 columna (Móvil) */
+  gap: 15px;
+}
+
+/* En tablets o pantallas grandes, usa 2 columnas */
+@media (min-width: 600px) {
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .main-desc {
+    margin-top: -40px; /* Sube un poco la tarjeta en pantallas grandes */
+  }
+}
+
+/* --- VIDEO --- */
+.video-wrapper {
+  margin-bottom: 20px;
+  border: 4px solid var(--secondary);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+.retro-video {
+  width: 100%;
+  display: block;
+}
+
+/* --- BOTONES --- */
+.action-buttons {
+  display: flex;
   flex-wrap: wrap;
-  gap: clamp(0.5rem, 2vw, 1rem);
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-.btn-dark {
-  --background: #3b1e12;
-  --color: #ffcc5c;
-  border: 2px solid #ffb000;
+.btn-retro {
+  --border-radius: 4px;
+  font-family: var(--retro-font);
+  font-size: 0.6rem;
+  --box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  margin: 0;
+  flex: 1 1 130px; /* Adaptable */
 }
 
-.btn-jugar {
-  --background: linear-gradient(90deg, #ffb000 0%, #ff4800 100%);
+.btn-retro.secondary {
+  --background: #3e2723;
+  --color: #ffcc80;
+  border: 2px solid #5d4037;
+}
+
+.btn-retro.primary {
+  --background: linear-gradient(90deg, #ffb000 0%, #ff6d00 100%);
   --color: #2b1007;
-  border: 2px solid #803000;
+  border: 2px solid #ffcc80;
+  font-size: 0.7rem;
+  min-height: 50px;
 }
 
-.espacio-final {
-  height: clamp(1.5rem, 5vw, 3rem);
+.w-100 {
+  flex-basis: 100%;
+}
+
+.btn-retro-outline {
+  --color: var(--primary);
+  --border-color: var(--primary);
+  --border-width: 2px;
+  font-family: var(--retro-font);
+  font-size: 0.6rem;
+  margin-top: 15px;
+}
+
+.footer-spacer { height: 60px; }
+
+/* --- ANIMACIONES --- */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.fade-in {
+  animation: slideUp 0.5s ease-out;
 }
