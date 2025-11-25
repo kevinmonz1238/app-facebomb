@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">facebomb app</string>
+    <string name="title_activity_main">facebomb-app</string>
+    <string name="package_name">io.ionic.starter</string>
+    <string name="custom_url_scheme">io.ionic.starter</string>
+
+    <string name="server_client_id">1019503271707-gnds84k11vai8uo4hihlrig2i5qorpnj.apps.googleusercontent.com</string>
+</resources>

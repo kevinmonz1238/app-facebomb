@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1019503271707",
+    "firebase_url": "https://app-facebomb-default-rtdb.firebaseio.com",
+    "project_id": "app-facebomb",
+    "storage_bucket": "app-facebomb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019503271707:android:433614d02a70bed7e6fdbe",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019503271707-qgf7ho9mvu3g1l0l0ofim3p31qml9678.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "68eb78337633173dad4bdfb5eadd27200c725f9a"
+          }
+        },
+        {
+          "client_id": "1019503271707-gnds84k11vai8uo4hihlrig2i5qorpnj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW1zhxUYNNacPUK4dWQz4nm7iTBluiQ3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019503271707-gnds84k11vai8uo4hihlrig2i5qorpnj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1019503271707-2kaqdf35dibgfdq1hjfeu8ir8n2nhngm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.facebomb.game"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
